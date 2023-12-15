@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steve Goode</title>
+    <style>
+        html,
+        body {
+            height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            width: 100vw;
+            margin: 0;
+        }
+
+        h1 {
+            font-weight: normal;
+        }
+
+        h1,
+        p {
+            margin: 10px;
+            padding: 0;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px;
+            text-align: center;
+        }
+
+        .links img {
+            height: 50px;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        .links a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .avatar {
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: black;
+                color: white;
+            }
+
+            .links img {
+                filter: invert(1);
+            }
+
+            .links a {
+                color: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <picture>
+        <source srcset="SociableSteve.webp" />
+        <img src="SociableSteve.png" class="avatar" alt="Avatar of Sociable Steve drinking tea" height="100"
+            width="100" />
+    </picture>
+    <h1>Steve Goode</h1>
+    <p>Website Coming Soonz.</p>
+</body>
+
+</html>
