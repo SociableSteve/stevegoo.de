@@ -112,8 +112,8 @@ This post has malformed YAML in the frontmatter section.`;
         
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toContain("Failed to parse frontmatter");
-        expect(error.message).toContain("Missing closing");
+        expect((error as Error).message).toContain("Failed to parse frontmatter");
+        expect((error as Error).message).toContain("Missing closing");
       }
     });
 
@@ -163,8 +163,8 @@ Content here`;
         
       } catch (error) {
         expect(error).toBeInstanceOf(FrontmatterError);
-        expect(error.message).toContain("title");
-        expect(error.message).toContain("expected string, received undefined");
+        expect((error as FrontmatterError).message).toContain("title");
+        expect((error as FrontmatterError).message).toContain("expected string, received undefined");
       }
     });
 
@@ -183,8 +183,8 @@ Content here`;
         
       } catch (error) {
         expect(error).toBeInstanceOf(FrontmatterError);
-        expect(error.message).toContain("description");
-        expect(error.message).toContain("expected string, received undefined");
+        expect((error as FrontmatterError).message).toContain("description");
+        expect((error as FrontmatterError).message).toContain("expected string, received undefined");
       }
     });
 
@@ -203,8 +203,8 @@ Content here`;
         
       } catch (error) {
         expect(error).toBeInstanceOf(FrontmatterError);
-        expect(error.message).toContain("publishedAt");
-        expect(error.message).toContain("expected string, received undefined");
+        expect((error as FrontmatterError).message).toContain("publishedAt");
+        expect((error as FrontmatterError).message).toContain("expected string, received undefined");
       }
     });
   });
@@ -223,10 +223,10 @@ Content here`;
 
       try {
         await repository.findBySlug("bad-date");
-        
+
       } catch (error) {
         expect(error).toBeInstanceOf(FrontmatterError);
-        expect(error.message).toContain("publishedAt must be in YYYY-MM-DD format");
+        expect((error as FrontmatterError).message).toContain("publishedAt must be in YYYY-MM-DD format");
       }
     });
 
@@ -243,10 +243,10 @@ Content here`;
 
       try {
         await repository.findBySlug("incomplete-date");
-        
+
       } catch (error) {
         expect(error).toBeInstanceOf(FrontmatterError);
-        expect(error.message).toContain("publishedAt must be in YYYY-MM-DD format");
+        expect((error as FrontmatterError).message).toContain("publishedAt must be in YYYY-MM-DD format");
       }
     });
   });
@@ -284,8 +284,8 @@ Content`,
           
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
-          expect(error.message).toContain(testCase.expectedError);
-          expect(error.message.length).toBeGreaterThan(20);
+          expect((error as Error).message).toContain(testCase.expectedError);
+          expect((error as Error).message.length).toBeGreaterThan(20);
         }
 
         // Clean up for next iteration
@@ -325,6 +325,8 @@ Content`;
 
       for (let i = 0; i < fieldTests.length; i++) {
         const test = fieldTests[i];
+        if (!test) continue;
+
         const filename = `field-test-${i}.md`;
 
         createTestFile(filename, test.content);
@@ -332,7 +334,7 @@ Content`;
 
         try {
           await repository.findBySlug(`field-test-${i}`);
-          
+
         } catch (error) {
           if (error instanceof FrontmatterError) {
             expect(error.field).toBe(test.expectedField);
@@ -361,7 +363,7 @@ Content`;
       } catch (error) {
         expect(error).toBeInstanceOf(FrontmatterError);
 
-        const message = error.message;
+        const message = (error as FrontmatterError).message;
         expect(message).toContain("Invalid frontmatter");
         expect(message).toContain("actionable-error.md");
         expect(message).toContain("publishedAt");
@@ -386,7 +388,7 @@ This file has no frontmatter section.`;
       } catch (error) {
         expect(error).toBeInstanceOf(FrontmatterError);
 
-        const message = error.message;
+        const message = (error as FrontmatterError).message;
         // Should mention multiple fields that failed validation
         const fieldCount = (message.match(/- \w+:/g) || []).length;
         expect(fieldCount).toBeGreaterThan(1);
@@ -411,7 +413,7 @@ Content`;
       } catch (error) {
         expect(error).toBeInstanceOf(FrontmatterError);
         // Error should come from parsing, not from missing file
-        expect(error.message).toContain("Invalid frontmatter");
+        expect((error as FrontmatterError).message).toContain("Invalid frontmatter");
       }
     });
 
@@ -473,8 +475,8 @@ Content`;
       } catch (error) {
         // Should get specific validation errors, not generic file system errors
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).not.toContain("ENOENT");
-        expect(error.message).not.toContain("permission denied");
+        expect((error as Error).message).not.toContain("ENOENT");
+        expect((error as Error).message).not.toContain("permission denied");
       }
     });
   });
