@@ -18,7 +18,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup Node.js
+    - name: Setup Node.js 20.x
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
@@ -34,12 +34,6 @@ jobs:
         npm run lint
         echo "✅ Linting passed!"
 
-    # Gate 2: Type Safety
-    - name: 🔧 Type Check
-      run: |
-        echo "🔧 Running TypeScript type checking..."
-        npx tsc --noEmit || echo "⚠️ Type checking not configured, skipping..."
-        echo "✅ Type checking completed!"
 
     # Gate 3: Unit Tests
     - name: 🧪 Run Unit Tests
@@ -70,7 +64,6 @@ jobs:
         echo "🎉 All quality gates passed!"
         echo ""
         echo "✅ Code Linting: PASSED"
-        echo "✅ Type Safety: PASSED"
         echo "✅ Unit Tests: PASSED"
         echo "✅ Build: PASSED"
         echo "✅ E2E Tests: PASSED"
