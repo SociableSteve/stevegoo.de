@@ -1,0 +1,92 @@
+/**
+ * PostMeta.module.css
+ *
+ * Metadata row displayed below a post title or within a post header.
+ * Items are inline-flex and wrap naturally on narrow viewports.
+ *
+ * The separator dot (·) is decorative — screen readers skip it via aria-hidden.
+ */
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+.postMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1-5);
+
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+
+  /* Reset <p> default margin */
+  margin: 0;
+}
+
+/* ============================================================
+   SMALL VARIANT
+   Used in compact listings (e.g. PostCard footer).
+   ============================================================ */
+
+.sm {
+  font-size: var(--font-size-xs);
+  gap: var(--space-1);
+}
+
+/* ============================================================
+   SEPARATOR
+   ============================================================ */
+
+.separator {
+  display: inline-block;
+  color: var(--color-text-muted);
+  line-height: 1;
+  /* Add a little extra visual breathing room */
+  padding-inline: var(--space-0-5);
+  user-select: none;
+}
+
+/* ============================================================
+   DATE
+   ============================================================ */
+
+.date {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+}
+
+.dateLabel {
+  color: var(--color-text-muted);
+  font-size: 0.9em;
+}
+
+/* ============================================================
+   READING TIME
+   ============================================================ */
+
+.readingTime {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.readingTime abbr {
+  text-decoration: none;
+  cursor: default;
+}
+
+/* ============================================================
+   AUTHOR
+   ============================================================ */
+
+.author {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}

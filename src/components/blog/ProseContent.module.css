@@ -1,0 +1,305 @@
+/**
+ * ProseContent.module.css
+ *
+ * Typography for Markdown-generated article bodies.
+ *
+ * Scoped to .prose so these heavy element selectors only apply inside
+ * ProseContent and do not leak into the rest of the design system.
+ *
+ * WCAG considerations:
+ *   - Font sizes remain above 16px for body copy (1rem base).
+ *   - Line-height 1.625 (relaxed) provides comfortable reading.
+ *   - Links have underlines by default (not just colour) for WCAG 1.4.1.
+ *   - Code blocks use a distinct background that has sufficient contrast
+ *     for the code text colour (see tokens.css for verified pairs).
+ *   - Images are responsive and never overflow their container.
+ *
+ * Reduced motion:
+ *   No animations are applied here, so no reduced-motion overrides needed.
+ */
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+
+.prose {
+  /* Typography baseline */
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+
+  /* Vertical spacing between sibling prose elements */
+  --prose-element-gap: var(--space-6);
+}
+
+/* ============================================================
+   VERTICAL RHYTHM — all direct children
+   ============================================================ */
+
+.prose > * + * {
+  margin-top: var(--prose-element-gap);
+}
+
+/* ============================================================
+   HEADINGS
+   ============================================================ */
+
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+  /* Headings need more breathing room above than below */
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-6);
+  /* Override the > * + * rule for headings specifically */
+}
+
+.prose :is(h1, h2, h3, h4, h5, h6):first-child {
+  margin-top: 0;
+}
+
+.prose h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+  margin-bottom: var(--space-8); /* Extra spacing below H1 */
+}
+
+.prose h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.prose h3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.prose h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.prose h5,
+.prose h6 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ============================================================
+   PARAGRAPH
+   ============================================================ */
+
+.prose p {
+  /* Reset top margin, add bottom margin for paragraph spacing */
+  margin-top: 0;
+  margin-bottom: var(--space-5);
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   LINKS
+   ============================================================ */
+
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color var(--duration-fast) var(--ease-in-out);
+}
+
+.prose a:hover {
+  color: var(--color-accent-hover);
+  text-decoration-thickness: 2px;
+}
+
+.prose a:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   LISTS
+   ============================================================ */
+
+.prose ul,
+.prose ol {
+  padding-inline-start: var(--space-6);
+  margin: 0;
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose li {
+  margin-top: var(--space-2);
+}
+
+.prose li::marker {
+  color: var(--color-text-muted);
+}
+
+/* Nested lists */
+.prose :is(ul, ol) :is(ul, ol) {
+  margin-top: var(--space-2);
+}
+
+/* ============================================================
+   BLOCKQUOTE
+   ============================================================ */
+
+.prose blockquote {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: var(--space-4);
+  border-inline-start: var(--border-width-4) solid var(--color-accent-subtle-border);
+
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.prose blockquote p {
+  margin: 0;
+}
+
+/* ============================================================
+   INLINE CODE
+   ============================================================ */
+
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  background-color: var(--color-code-bg);
+  border: var(--border-width-1) solid var(--color-code-border);
+  border-radius: var(--radius-sm);
+  padding-block: 0.1em;
+  padding-inline: var(--space-1);
+
+  /* Prevent very long inline code from overflowing its container */
+  word-break: break-all;
+}
+
+/* ============================================================
+   CODE BLOCKS (fenced)
+   rehype-pretty-code wraps the block in <figure data-rehype-pretty-code-figure>
+   containing a <pre><code> structure.
+   ============================================================ */
+
+.prose pre {
+  background-color: var(--color-code-block-bg);
+  color: var(--color-code-block-text);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  overflow-x: auto;
+
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  word-break: normal;
+}
+
+/* File name caption from rehype-pretty-code */
+.prose figcaption[data-rehype-pretty-code-title] {
+  display: inline-block;
+  padding-block: var(--space-1);
+  padding-inline: var(--space-3);
+  background-color: var(--color-code-block-bg);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  /* Overlap the adjacent pre's top border-radius */
+  margin-bottom: -0.5rem;
+}
+
+/* ============================================================
+   IMAGES
+   ============================================================ */
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  display: block;
+}
+
+.prose figure {
+  margin-inline: 0;
+}
+
+.prose figcaption {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: var(--space-2);
+}
+
+/* ============================================================
+   HORIZONTAL RULE
+   ============================================================ */
+
+.prose hr {
+  border: none;
+  border-top: var(--border-width-1) solid var(--color-border);
+  margin-block: var(--space-12);
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+  overflow-x: auto;
+  display: block;
+}
+
+.prose th {
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-width-2) solid var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+.prose td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-width-1) solid var(--color-border);
+  color: var(--color-text-primary);
+  vertical-align: top;
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+
+.prose ::selection {
+  background-color: var(--color-selection-bg);
+  color: var(--color-selection-text);
+}

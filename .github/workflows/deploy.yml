@@ -1,0 +1,202 @@
+name: Deploy to GitHub Pages
+
+# Trigger on pushes and merged PRs to main.
+# Also allows manual trigger from the Actions tab for emergency re-deploys.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Grant the workflow the minimum permissions required for GitHub Pages
+# deployment via the official actions/deploy-pages action.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Prevent parallel deployments to avoid race conditions on the Pages
+# environment. The "queued" strategy lets an in-flight run finish before
+# starting the next, rather than cancelling it mid-deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Quality gate — lint, type-check, unit tests, and coverage thresholds.
+  # Running this as a separate job means we get clear failure signals and
+  # avoid paying for a full build + deploy when the code has known defects.
+  # ---------------------------------------------------------------------------
+  quality:
+    name: Quality Gate (lint / type-check / unit tests)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run type-check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests with coverage
+        run: npm run test:coverage
+
+  # ---------------------------------------------------------------------------
+  # Build — produce the static export artefact.
+  # Only runs after the quality gate passes to avoid wasting build minutes.
+  # ---------------------------------------------------------------------------
+  build:
+    name: Build static export
+    runs-on: ubuntu-latest
+    needs: quality
+
+    # Site URL is injected at build time so canonical links, OG tags, and the
+    # RSS feed all resolve to the live origin rather than "localhost".
+    # Set NEXT_PUBLIC_SITE_URL as a repository secret or variable in GitHub
+    # Settings > Secrets and variables > Actions. The fallback is safe to use
+    # while the repository secret has not yet been configured.
+    env:
+      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://stevegoode.dev' }}
+      NEXT_PUBLIC_SITE_NAME: ${{ vars.NEXT_PUBLIC_SITE_NAME || 'Steve Goode' }}
+      NEXT_PUBLIC_GITHUB_USERNAME: ${{ vars.NEXT_PUBLIC_GITHUB_USERNAME || 'stevegoode' }}
+      NEXT_PUBLIC_LINKEDIN_USERNAME: ${{ vars.NEXT_PUBLIC_LINKEDIN_USERNAME || 'stevegoode' }}
+      NEXT_PUBLIC_AUTHOR_EMAIL: ${{ vars.NEXT_PUBLIC_AUTHOR_EMAIL || 'steve@stevegoode.dev' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Next.js caches its build artefacts in .next/cache. Restoring this
+      # between runs dramatically reduces rebuild times for content-only changes
+      # because only changed page bundles are recompiled.
+      - name: Restore Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          # Cache key includes the OS, a hash of all dependency manifests, and
+          # a hash of all source files. When only content files change the
+          # source hash changes, invalidating the cache for a full rebuild.
+          # This is intentionally conservative: stale cache artefacts from a
+          # previous dependency version would cause subtle build failures.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-${{ hashFiles('src/**/*', 'content/**/*', 'public/**/*', 'next.config.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-
+            ${{ runner.os }}-nextjs-
+
+      - name: Build static export
+        run: npm run build
+
+      # Upload the 'out' directory as a Pages artefact. The official Pages
+      # action requires this specific artifact name and upload action.
+      - name: Upload Pages artefact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  # ---------------------------------------------------------------------------
+  # E2E tests — run Playwright against the built static export before deploying.
+  # A failed E2E gate blocks the deployment without touching the live site.
+  # ---------------------------------------------------------------------------
+  e2e:
+    name: E2E tests (Playwright)
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # Download the Pages artefact built in the previous job so we serve the
+      # exact same files that will be deployed, not a fresh rebuild.
+      - name: Download Pages artefact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: /tmp/pages-artifact
+
+      # The Pages artifact is a tar archive; extract it to the 'out' directory
+      # that Playwright's webServer command expects.
+      - name: Extract Pages artefact
+        run: |
+          mkdir -p out
+          tar -xf /tmp/pages-artifact/artifact.tar -C out
+
+      - name: Run E2E tests
+        run: npx playwright test --project=chromium
+        env:
+          CI: true
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+  # ---------------------------------------------------------------------------
+  # Deploy — only runs after E2E tests pass.
+  # Uses the official GitHub Pages deployment environment so the deployment
+  # appears in the repository's "Environments" section with URL and history.
+  # ---------------------------------------------------------------------------
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: e2e
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify deployment
+        run: |
+          echo "Deployment URL: ${{ steps.deployment.outputs.page_url }}"
+          # Give Pages CDN a moment to propagate before probing
+          sleep 10
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            --max-time 30 \
+            --retry 3 \
+            --retry-delay 5 \
+            "${{ steps.deployment.outputs.page_url }}")
+          echo "HTTP status: ${HTTP_STATUS}"
+          if [ "${HTTP_STATUS}" != "200" ]; then
+            echo "Deployment verification failed — HTTP ${HTTP_STATUS}"
+            exit 1
+          fi
+          echo "Deployment verified successfully"

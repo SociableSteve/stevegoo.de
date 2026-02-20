@@ -1,0 +1,244 @@
+/**
+ * Button.module.css
+ *
+ * All sizing, layout, and motion use design tokens exclusively.
+ * Variants map to semantic token pairs (background / text / border).
+ *
+ * Touch target compliance:
+ *   All sizes satisfy the WCAG 2.5.5 (AAA) 44×44 px minimum.
+ *   sm: 44px enforced via min-height/min-width
+ *   md: 44px default
+ *   lg: 52px
+ */
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+.button {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  /* Typography */
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-none);
+  white-space: nowrap;
+  text-decoration: none;
+
+  /* Shape */
+  border-radius: var(--radius-button);
+  border: var(--border-width-1) solid transparent;
+
+  /* Interaction */
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+
+  /* Motion */
+  transition:
+    color var(--duration-fast) var(--ease-in-out),
+    background-color var(--duration-fast) var(--ease-in-out),
+    border-color var(--duration-fast) var(--ease-in-out),
+    box-shadow var(--duration-fast) var(--ease-in-out),
+    opacity var(--duration-fast) var(--ease-in-out);
+
+  /* Reset */
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  box-sizing: border-box;
+
+  /* Prevent shrink in flex containers */
+  flex-shrink: 0;
+
+  /* Enforce accessible touch targets */
+  min-height: 44px;
+  min-width: 44px;
+
+  /* Focus ring — scoped tighter than global for pill shape */
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   FOCUS — WCAG 2.4.11 Focus Appearance (AA)
+   ============================================================ */
+
+.button:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   DISABLED STATE
+   ============================================================ */
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============================================================
+   ACTIVE PRESS FEEDBACK
+   (skipped when loading to avoid visual jitter)
+   ============================================================ */
+
+.button:not(.loading):active {
+  transform: var(--interact-active-scale);
+}
+
+/* ============================================================
+   LOADING STATE — pointer and content adjustments
+   ============================================================ */
+
+.button.loading {
+  cursor: wait;
+  position: relative;
+}
+
+/* ============================================================
+   SIZE VARIANTS
+   ============================================================ */
+
+.sm {
+  font-size: var(--font-size-xs);
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  /* min-height already 44px from base — padding gives ~28px visual height
+     but the 44px touch zone is preserved */
+}
+
+.md {
+  font-size: var(--font-size-sm);
+  padding-block: var(--space-2-5);
+  padding-inline: var(--space-4);
+  /* ~44px visual height */
+}
+
+.lg {
+  font-size: var(--font-size-base);
+  padding-block: var(--space-3-5);
+  padding-inline: var(--space-6);
+  /* ~52px visual height */
+  min-height: 52px;
+}
+
+/* ============================================================
+   VARIANT — PRIMARY
+   ============================================================ */
+
+.primary {
+  background-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+  border-color: var(--color-accent);
+}
+
+.primary:hover:not(:disabled):not([aria-disabled="true"]):not(.loading) {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  filter: var(--interact-hover-brightness);
+}
+
+/* ============================================================
+   VARIANT — SECONDARY
+   ============================================================ */
+
+.secondary {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+
+.secondary:hover:not(:disabled):not([aria-disabled="true"]):not(.loading) {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border-strong);
+}
+
+/* ============================================================
+   VARIANT — GHOST
+   ============================================================ */
+
+.ghost {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border-color: transparent;
+}
+
+.ghost:hover:not(:disabled):not([aria-disabled="true"]):not(.loading) {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+/* ============================================================
+   VARIANT — DESTRUCTIVE
+   ============================================================ */
+
+.destructive {
+  background-color: var(--color-error);
+  color: var(--color-text-on-accent);
+  border-color: var(--color-error);
+}
+
+.destructive:hover:not(:disabled):not([aria-disabled="true"]):not(.loading) {
+  background-color: var(--color-error);
+  border-color: var(--color-error);
+  filter: var(--interact-hover-brightness);
+}
+
+/* ============================================================
+   ICON SLOT
+   ============================================================ */
+
+.iconSlot {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  /* Inherit currentColor so SVG icons adopt button text color */
+  color: currentColor;
+}
+
+/* ============================================================
+   SPINNER
+   ============================================================ */
+
+.spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--radius-full);
+  animation: spin var(--duration-slower) var(--ease-linear) infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Respect reduced-motion: swap animation for pulsing opacity */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: pulse var(--duration-slowest) var(--ease-in-out) infinite
+      alternate;
+    border-top-color: currentColor;
+    border-right-color: transparent;
+  }
+
+  @keyframes pulse {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.3;
+    }
+  }
+}

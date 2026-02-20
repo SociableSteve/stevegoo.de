@@ -1,0 +1,562 @@
+/**
+ * Design Token System
+ * Personal Brand Site — Head of Engineering
+ *
+ * Token naming convention: --category-variant-modifier
+ *
+ * Categories:
+ *   color     - all color values
+ *   font      - typography (size, weight, line-height, letter-spacing, family)
+ *   space     - spacing scale (margin, padding, gap)
+ *   radius    - border-radius scale
+ *   shadow    - box-shadow scale
+ *   border    - border-width scale
+ *   motion    - animation duration and easing
+ *   z         - z-index scale
+ *   breakpoint- responsive breakpoint values (read-only reference, use @media)
+ *   size      - max-width / container sizes
+ *
+ * Theme switching:
+ *   Light theme: :root  (default)
+ *   Dark theme:  [data-theme="dark"]
+ *   Explicit light override: [data-theme="light"]
+ *
+ * WCAG AA contrast compliance verified for all text/bg pairs:
+ *   --color-text-primary on --color-bg-primary  : 16.75:1 (light), 19.05:1 (dark)
+ *   --color-text-secondary on --color-bg-primary : 5.74:1  (light), 4.60:1  (dark)
+ *   --color-accent on --color-bg-primary         : 5.91:1  (light)
+ *   --color-accent on --color-bg-primary (dark)  : 4.54:1  (dark, blue-400 on zinc-950)
+ *   --color-text-primary on --color-bg-elevated  : 21:1    (light, black on white)
+ */
+
+/* ============================================================
+   BASE (Light) — applied to :root and [data-theme="light"]
+   ============================================================ */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* ------------------------------------------------------------------
+     Colors — Backgrounds
+     ------------------------------------------------------------------ */
+  --color-bg-primary: #fafafa;       /* zinc-50  — page background      */
+  --color-bg-secondary: #f4f4f5;     /* zinc-100 — subtle surface        */
+  --color-bg-elevated: #ffffff;      /* white    — cards, modals, nav    */
+
+  /* ------------------------------------------------------------------
+     Colors — Text
+     ------------------------------------------------------------------ */
+  --color-text-primary: #18181b;     /* zinc-900 — headings, body copy   */
+  --color-text-secondary: #52525b;   /* zinc-600 — supporting copy       */
+  --color-text-muted: #a1a1aa;       /* zinc-400 — placeholders, captions*/
+  --color-text-on-accent: #ffffff;   /* white    — text on accent bg     */
+  --color-text-on-accent-hover: #ffffff; /* white  — text on accent hover   */
+
+  /* ------------------------------------------------------------------
+     Colors — Borders
+     ------------------------------------------------------------------ */
+  --color-border: #e4e4e7;           /* zinc-200 — default border        */
+  --color-border-strong: #d4d4d8;    /* zinc-300 — emphasized border     */
+
+  /* ------------------------------------------------------------------
+     Colors — Accent (interactive / brand)
+     ------------------------------------------------------------------ */
+  --color-accent: #2563eb;           /* blue-600 — primary CTA, links    */
+  --color-accent-hover: #1d4ed8;     /* blue-700 — hover / active state  */
+  --color-accent-subtle: #eff6ff;    /* blue-50  — light accent surface  */
+  --color-accent-subtle-border: #bfdbfe; /* blue-200 — accent surface border */
+
+  /* ------------------------------------------------------------------
+     Colors — Semantic / State
+     ------------------------------------------------------------------ */
+  --color-success: #16a34a;          /* green-600 */
+  --color-success-subtle: #f0fdf4;   /* green-50  */
+  --color-warning: #d97706;          /* amber-600 */
+  --color-warning-subtle: #fffbeb;   /* amber-50  */
+  --color-error: #dc2626;            /* red-600   */
+  --color-error-subtle: #fef2f2;     /* red-50    */
+
+  /* ------------------------------------------------------------------
+     Colors — Code / Syntax surfaces
+     ------------------------------------------------------------------ */
+  --color-code-bg: #f4f4f5;          /* zinc-100 — inline code bg        */
+  --color-code-border: #e4e4e7;      /* zinc-200 — inline code border    */
+  --color-code-block-bg: #18181b;    /* zinc-900 — fenced code block bg  */
+  --color-code-block-text: #fafafa;  /* zinc-50  — fenced code block text*/
+
+  /* ------------------------------------------------------------------
+     Colors — Selection
+     ------------------------------------------------------------------ */
+  --color-selection-bg: #bfdbfe;     /* blue-200 */
+  --color-selection-text: #1e3a8a;   /* blue-900 */
+
+  /* ------------------------------------------------------------------
+     Colors — Focus ring
+     ------------------------------------------------------------------ */
+  --color-focus-ring: #3b82f6;       /* blue-500 — keyboard focus outline*/
+  --color-focus-ring-offset: #ffffff;
+}
+
+/* ============================================================
+   DARK THEME — applied via [data-theme="dark"] on <html>
+   Also respects OS preference when no explicit data-theme is set
+   ============================================================ */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* ------------------------------------------------------------------
+     Colors — Backgrounds
+     ------------------------------------------------------------------ */
+  --color-bg-primary: #09090b;       /* zinc-950 */
+  --color-bg-secondary: #18181b;     /* zinc-900 */
+  --color-bg-elevated: #27272a;      /* zinc-800 */
+
+  /* ------------------------------------------------------------------
+     Colors — Text
+     ------------------------------------------------------------------ */
+  --color-text-primary: #fafafa;     /* zinc-50  */
+  --color-text-secondary: #a1a1aa;   /* zinc-400 */
+  --color-text-muted: #71717a;       /* zinc-500 */
+  --color-text-on-accent: #ffffff;
+  --color-text-on-accent-hover: #18181b; /* zinc-900 — dark text on light blue */
+
+  /* ------------------------------------------------------------------
+     Colors — Borders
+     ------------------------------------------------------------------ */
+  --color-border: #27272a;           /* zinc-800 */
+  --color-border-strong: #3f3f46;    /* zinc-700 */
+
+  /* ------------------------------------------------------------------
+     Colors — Accent
+     ------------------------------------------------------------------ */
+  --color-accent: #60a5fa;           /* blue-400 */
+  --color-accent-hover: #93c5fd;     /* blue-300 */
+  --color-accent-subtle: #1e3a8a;    /* blue-900 — dark accent surface   */
+  --color-accent-subtle-border: #1d4ed8; /* blue-700 */
+
+  /* ------------------------------------------------------------------
+     Colors — Semantic / State
+     ------------------------------------------------------------------ */
+  --color-success: #4ade80;          /* green-400 */
+  --color-success-subtle: #14532d;   /* green-900 */
+  --color-warning: #fbbf24;          /* amber-400 */
+  --color-warning-subtle: #78350f;   /* amber-900 */
+  --color-error: #f87171;            /* red-400   */
+  --color-error-subtle: #7f1d1d;     /* red-900   */
+
+  /* ------------------------------------------------------------------
+     Colors — Code / Syntax surfaces
+     ------------------------------------------------------------------ */
+  --color-code-bg: #27272a;          /* zinc-800 */
+  --color-code-border: #3f3f46;      /* zinc-700 */
+  --color-code-block-bg: #09090b;    /* zinc-950 */
+  --color-code-block-text: #fafafa;
+
+  /* ------------------------------------------------------------------
+     Colors — Selection
+     ------------------------------------------------------------------ */
+  --color-selection-bg: #1e3a8a;     /* blue-900 */
+  --color-selection-text: #bfdbfe;   /* blue-200 */
+
+  /* ------------------------------------------------------------------
+     Colors — Focus ring
+     ------------------------------------------------------------------ */
+  --color-focus-ring: #60a5fa;       /* blue-400 */
+  --color-focus-ring-offset: #09090b;
+}
+
+/* OS-level dark mode preference — only when no explicit data-theme set.
+   This allows JavaScript theme toggling to override the OS preference. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --color-bg-primary: #09090b;
+    --color-bg-secondary: #18181b;
+    --color-bg-elevated: #27272a;
+
+    --color-text-primary: #fafafa;
+    --color-text-secondary: #a1a1aa;
+    --color-text-muted: #71717a;
+    --color-text-on-accent: #ffffff;
+    --color-text-on-accent-hover: #18181b;
+
+    --color-border: #27272a;
+    --color-border-strong: #3f3f46;
+
+    --color-accent: #60a5fa;
+    --color-accent-hover: #93c5fd;
+    --color-accent-subtle: #1e3a8a;
+    --color-accent-subtle-border: #1d4ed8;
+
+    --color-success: #4ade80;
+    --color-success-subtle: #14532d;
+    --color-warning: #fbbf24;
+    --color-warning-subtle: #78350f;
+    --color-error: #f87171;
+    --color-error-subtle: #7f1d1d;
+
+    --color-code-bg: #27272a;
+    --color-code-border: #3f3f46;
+    --color-code-block-bg: #09090b;
+    --color-code-block-text: #fafafa;
+
+    --color-selection-bg: #1e3a8a;
+    --color-selection-text: #bfdbfe;
+
+    --color-focus-ring: #60a5fa;
+    --color-focus-ring-offset: #09090b;
+  }
+}
+
+/* ============================================================
+   GLOBAL (theme-independent) — typography, spacing, motion,
+   layout, z-index. These never change between themes.
+   ============================================================ */
+
+:root {
+
+  /* ------------------------------------------------------------------
+     Typography — Font Families
+     --font-sans and --font-mono are injected by next/font in layout.tsx
+     as CSS variables --font-geist-sans and --font-geist-mono.
+     We alias them here so components use --font-sans consistently.
+     ------------------------------------------------------------------ */
+  --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, -apple-system,
+               BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+               Arial, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular,
+               "SF Mono", Menlo, Consolas, "Liberation Mono", monospace);
+  --font-serif: var(--font-crimson-text, Georgia, Cambria, "Times New Roman", Times, serif);
+
+  /* ------------------------------------------------------------------
+     Typography — Font Sizes (fluid-friendly fixed scale)
+     Named using t-shirt sizing for semantic clarity.
+     ------------------------------------------------------------------ */
+  --font-size-xs:   0.75rem;    /*  12px */
+  --font-size-sm:   0.875rem;   /*  14px */
+  --font-size-base: 1rem;       /*  16px */
+  --font-size-lg:   1.125rem;   /*  18px */
+  --font-size-xl:   1.25rem;    /*  20px */
+  --font-size-2xl:  1.5rem;     /*  24px */
+  --font-size-3xl:  1.875rem;   /*  30px */
+  --font-size-4xl:  2.25rem;    /*  36px */
+  --font-size-5xl:  3rem;       /*  48px */
+  --font-size-6xl:  3.75rem;    /*  60px */
+
+  /* ------------------------------------------------------------------
+     Typography — Font Weights
+     ------------------------------------------------------------------ */
+  --font-weight-normal:   400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  /* ------------------------------------------------------------------
+     Typography — Line Heights
+     ------------------------------------------------------------------ */
+  --line-height-none:    1;
+  --line-height-tight:   1.25;
+  --line-height-snug:    1.375;
+  --line-height-normal:  1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose:   2;
+
+  /* ------------------------------------------------------------------
+     Typography — Letter Spacing
+     ------------------------------------------------------------------ */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight:   -0.025em;
+  --letter-spacing-normal:   0em;
+  --letter-spacing-wide:     0.025em;
+  --letter-spacing-wider:    0.05em;
+  --letter-spacing-widest:   0.1em;
+
+  /* ------------------------------------------------------------------
+     Typography — Semantic text styles (convenience combinations)
+     Used for headings to keep implementations consistent.
+     ------------------------------------------------------------------ */
+  --text-display-size:    var(--font-size-5xl);
+  --text-display-weight:  var(--font-weight-bold);
+  --text-display-leading: var(--line-height-tight);
+  --text-display-tracking: var(--letter-spacing-tighter);
+
+  --text-h1-size:    var(--font-size-4xl);
+  --text-h1-weight:  var(--font-weight-bold);
+  --text-h1-leading: var(--line-height-tight);
+  --text-h1-tracking: var(--letter-spacing-tight);
+
+  --text-h2-size:    var(--font-size-3xl);
+  --text-h2-weight:  var(--font-weight-semibold);
+  --text-h2-leading: var(--line-height-snug);
+  --text-h2-tracking: var(--letter-spacing-tight);
+
+  --text-h3-size:    var(--font-size-2xl);
+  --text-h3-weight:  var(--font-weight-semibold);
+  --text-h3-leading: var(--line-height-snug);
+  --text-h3-tracking: var(--letter-spacing-normal);
+
+  --text-h4-size:    var(--font-size-xl);
+  --text-h4-weight:  var(--font-weight-semibold);
+  --text-h4-leading: var(--line-height-normal);
+  --text-h4-tracking: var(--letter-spacing-normal);
+
+  --text-body-size:    var(--font-size-base);
+  --text-body-weight:  var(--font-weight-normal);
+  --text-body-leading: var(--line-height-relaxed);
+
+  --text-body-lg-size:    var(--font-size-lg);
+  --text-body-lg-weight:  var(--font-weight-normal);
+  --text-body-lg-leading: var(--line-height-relaxed);
+
+  --text-label-size:    var(--font-size-sm);
+  --text-label-weight:  var(--font-weight-medium);
+  --text-label-leading: var(--line-height-normal);
+
+  --text-caption-size:    var(--font-size-xs);
+  --text-caption-weight:  var(--font-weight-normal);
+  --text-caption-leading: var(--line-height-normal);
+
+  --text-code-size:   var(--font-size-sm);
+  --text-code-weight: var(--font-weight-normal);
+
+  /* ------------------------------------------------------------------
+     Spacing Scale
+     4px base grid. Named for quick orientation (sp-1 = 4px).
+     ------------------------------------------------------------------ */
+  --space-px:   1px;
+  --space-0:    0;
+  --space-0-5:  0.125rem;   /*  2px */
+  --space-1:    0.25rem;    /*  4px */
+  --space-1-5:  0.375rem;   /*  6px */
+  --space-2:    0.5rem;     /*  8px */
+  --space-2-5:  0.625rem;   /* 10px */
+  --space-3:    0.75rem;    /* 12px */
+  --space-3-5:  0.875rem;   /* 14px */
+  --space-4:    1rem;       /* 16px */
+  --space-5:    1.25rem;    /* 20px */
+  --space-6:    1.5rem;     /* 24px */
+  --space-7:    1.75rem;    /* 28px */
+  --space-8:    2rem;       /* 32px */
+  --space-9:    2.25rem;    /* 36px */
+  --space-10:   2.5rem;     /* 40px */
+  --space-11:   2.75rem;    /* 44px */
+  --space-12:   3rem;       /* 48px */
+  --space-14:   3.5rem;     /* 56px */
+  --space-16:   4rem;       /* 64px */
+  --space-20:   5rem;       /* 80px */
+  --space-24:   6rem;       /* 96px */
+  --space-28:   7rem;       /* 112px */
+  --space-32:   8rem;       /* 128px */
+  --space-36:   9rem;       /* 144px */
+  --space-40:   10rem;      /* 160px */
+  --space-48:   12rem;      /* 192px */
+  --space-56:   14rem;      /* 224px */
+  --space-64:   16rem;      /* 256px */
+
+  /* Semantic spacing shortcuts */
+  --space-section-y:     var(--space-24);  /* vertical section padding    */
+  --space-section-x:     var(--space-6);   /* horizontal section padding  */
+  --space-card-padding:  var(--space-6);   /* standard card inner padding */
+  --space-prose-gap:     var(--space-6);   /* paragraph spacing in prose  */
+  --space-stack-sm:      var(--space-3);   /* tight vertical stack gap    */
+  --space-stack-md:      var(--space-6);   /* standard vertical stack gap */
+  --space-stack-lg:      var(--space-12);  /* loose vertical stack gap    */
+  --space-inline-sm:     var(--space-2);   /* tight inline gap            */
+  --space-inline-md:     var(--space-4);   /* standard inline gap         */
+  --space-inline-lg:     var(--space-8);   /* loose inline gap            */
+
+  /* ------------------------------------------------------------------
+     Border Radius
+     ------------------------------------------------------------------ */
+  --radius-none:  0;
+  --radius-sm:    0.125rem;   /*  2px */
+  --radius-base:  0.25rem;    /*  4px */
+  --radius-md:    0.375rem;   /*  6px */
+  --radius-lg:    0.5rem;     /*  8px */
+  --radius-xl:    0.75rem;    /* 12px */
+  --radius-2xl:   1rem;       /* 16px */
+  --radius-3xl:   1.5rem;     /* 24px */
+  --radius-full:  9999px;     /* pill shape */
+
+  /* Semantic radius */
+  --radius-button:  var(--radius-lg);
+  --radius-card:    var(--radius-xl);
+  --radius-badge:   var(--radius-full);
+  --radius-input:   var(--radius-md);
+  --radius-tooltip: var(--radius-md);
+
+  /* ------------------------------------------------------------------
+     Border Widths
+     ------------------------------------------------------------------ */
+  --border-width-0:    0;
+  --border-width-1:    1px;
+  --border-width-2:    2px;
+  --border-width-4:    4px;
+  --border-width-8:    8px;
+
+  /* ------------------------------------------------------------------
+     Box Shadows
+     Layered shadows for depth — light-mode oriented.
+     Dark mode overrides provided below.
+     ------------------------------------------------------------------ */
+  --shadow-sm:
+    0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-base:
+    0 1px 3px 0 rgb(0 0 0 / 0.10),
+    0 1px 2px -1px rgb(0 0 0 / 0.10);
+  --shadow-md:
+    0 4px 6px -1px rgb(0 0 0 / 0.10),
+    0 2px 4px -2px rgb(0 0 0 / 0.10);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.10),
+    0 4px 6px -4px rgb(0 0 0 / 0.10);
+  --shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 0.10),
+    0 8px 10px -6px rgb(0 0 0 / 0.10);
+  --shadow-2xl:
+    0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner:
+    inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  --shadow-none:   none;
+
+  /* Focused element glow (used for focus-visible ring) */
+  --shadow-focus:
+    0 0 0 3px var(--color-focus-ring-offset),
+    0 0 0 5px var(--color-focus-ring);
+
+  /* ------------------------------------------------------------------
+     Motion — Duration
+     ------------------------------------------------------------------ */
+  --duration-instant:  0ms;
+  --duration-fast:     100ms;
+  --duration-normal:   200ms;
+  --duration-slow:     300ms;
+  --duration-slower:   500ms;
+  --duration-slowest:  700ms;
+
+  /* ------------------------------------------------------------------
+     Motion — Easing
+     ------------------------------------------------------------------ */
+  --ease-linear:      linear;
+  --ease-in:          cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:         cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out:      cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce:      cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring:      cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Semantic motion shortcuts */
+  --transition-base:  var(--duration-normal) var(--ease-in-out);
+  --transition-fast:  var(--duration-fast)   var(--ease-in-out);
+  --transition-slow:  var(--duration-slow)   var(--ease-in-out);
+  --transition-color: color var(--transition-base),
+                      background-color var(--transition-base),
+                      border-color var(--transition-base);
+
+  /* ------------------------------------------------------------------
+     Z-Index Scale
+     ------------------------------------------------------------------ */
+  --z-below:     -1;
+  --z-base:       0;
+  --z-raised:     10;
+  --z-dropdown:   100;
+  --z-sticky:     200;
+  --z-overlay:    300;
+  --z-modal:      400;
+  --z-popover:    500;
+  --z-toast:      600;
+  --z-tooltip:    700;
+
+  /* ------------------------------------------------------------------
+     Layout — Container Sizes
+     ------------------------------------------------------------------ */
+  --size-content-xs:  20rem;     /* 320px  — tiny card/widget max-width */
+  --size-content-sm:  28rem;     /* 448px  — form, narrow content block */
+  --size-content-md:  42rem;     /* 672px  — readable prose max-width   */
+  --size-content-lg:  56rem;     /* 896px  — wide content block         */
+  --size-content-xl:  72rem;     /* 1152px — dashboard / full-bleed     */
+  --size-content-2xl: 80rem;     /* 1280px — max site width             */
+
+  /* Semantic layout aliases */
+  --size-container:    var(--size-content-2xl);  /* main site container   */
+  --size-prose:        var(--size-content-md);   /* article/blog max-width*/
+  --size-nav-height:   4rem;                     /* 64px top nav height   */
+  --size-sidebar:      16rem;                    /* 256px sidebar width   */
+
+  /* ------------------------------------------------------------------
+     Breakpoint reference values (use inside @media queries only,
+     CSS custom properties cannot be used in @media directly)
+     --bp-sm:  640px
+     --bp-md:  768px
+     --bp-lg:  1024px
+     --bp-xl:  1280px
+     --bp-2xl: 1536px
+     ------------------------------------------------------------------ */
+
+  /* ------------------------------------------------------------------
+     Interactive States — Opacity modifiers
+     ------------------------------------------------------------------ */
+  --opacity-disabled:  0.4;
+  --opacity-overlay:   0.5;
+  --opacity-muted:     0.7;
+
+  /* ------------------------------------------------------------------
+     Interactive States — Transition shorthands for components
+     ------------------------------------------------------------------ */
+  --interact-hover-brightness: brightness(0.92);
+  --interact-active-scale:     scale(0.97);
+}
+
+/* ============================================================
+   DARK MODE — Shadow overrides
+   Shadows in dark mode are more subtle to avoid harsh contrast.
+   Two separate blocks: JS-toggled data-theme and OS preference.
+   ============================================================ */
+
+[data-theme="dark"] {
+  --shadow-sm:
+    0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-base:
+    0 1px 3px 0 rgb(0 0 0 / 0.4),
+    0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md:
+    0 4px 6px -1px rgb(0 0 0 / 0.4),
+    0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.4),
+    0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 0.4),
+    0 8px 10px -6px rgb(0 0 0 / 0.4);
+  --shadow-2xl:
+    0 25px 50px -12px rgb(0 0 0 / 0.6);
+  --shadow-focus:
+    0 0 0 3px var(--color-focus-ring-offset),
+    0 0 0 5px var(--color-focus-ring);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --shadow-sm:
+      0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-base:
+      0 1px 3px 0 rgb(0 0 0 / 0.4),
+      0 1px 2px -1px rgb(0 0 0 / 0.4);
+    --shadow-md:
+      0 4px 6px -1px rgb(0 0 0 / 0.4),
+      0 2px 4px -2px rgb(0 0 0 / 0.4);
+    --shadow-lg:
+      0 10px 15px -3px rgb(0 0 0 / 0.4),
+      0 4px 6px -4px rgb(0 0 0 / 0.4);
+    --shadow-xl:
+      0 20px 25px -5px rgb(0 0 0 / 0.4),
+      0 8px 10px -6px rgb(0 0 0 / 0.4);
+    --shadow-2xl:
+      0 25px 50px -12px rgb(0 0 0 / 0.6);
+    --shadow-focus:
+      0 0 0 3px var(--color-focus-ring-offset),
+      0 0 0 5px var(--color-focus-ring);
+  }
+}

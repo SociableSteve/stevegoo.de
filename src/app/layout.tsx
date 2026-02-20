@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Crimson_Text } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/providers";
+import { SkipLink, Header, Footer } from "@/components/layout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -9,6 +11,13 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const crimsonText = Crimson_Text({
+  weight: ['400', '600'],
+  style: ['normal', 'italic'],
+  variable: "--font-crimson-text",
   subsets: ["latin"],
 });
 
@@ -26,15 +35,33 @@ export const metadata: Metadata = {
   },
 };
 
+const themeScript = `
+  (function() {
+    const stored = localStorage.getItem("theme");
+    const system = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark" : "light";
+    const theme = stored || system;
+    document.documentElement.dataset.theme = theme;
+  })();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${crimsonText.variable}`}>
+        <ThemeProvider>
+          <SkipLink />
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

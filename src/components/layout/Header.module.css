@@ -1,0 +1,370 @@
+/**
+ * Technical Editorial Header - Enhanced for Head of Engineering Brand
+ * Sophisticated theme-aware design with premium typography and editorial precision
+ */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 80px;
+  background: color-mix(in srgb, var(--color-bg-elevated) 85%, transparent);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  border-bottom: 1px solid var(--color-border);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  border-top: 2px solid var(--color-accent);
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent) 50%, transparent);
+  opacity: 0.3;
+  border-radius: 1px;
+}
+
+/* Enhanced header on scroll */
+.headerScrolled {
+  background: color-mix(in srgb, var(--color-bg-elevated) 95%, transparent);
+  border-bottom-color: var(--color-accent);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Fallback for browsers without backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+  .header {
+    background: var(--color-bg-elevated);
+  }
+}
+
+/* ============================================================
+   INNER CONTAINER
+   ============================================================ */
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 80px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ============================================================
+   LOGO / HOME LINK
+   ============================================================ */
+
+.homeLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 600;
+  transition: all var(--transition-base);
+  position: relative;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-feature-settings: "liga", "kern";
+}
+
+.homeLink::before {
+  content: '~/';
+  color: var(--color-accent);
+  font-size: 20px;
+  transition: all var(--transition-base);
+  font-weight: 700;
+}
+
+.homeLink:hover::before {
+  transform: scale(1.1) translateY(-1px);
+  color: var(--color-accent-hover);
+  text-shadow: 0 0 8px var(--color-accent);
+}
+
+.homeLink:hover {
+  color: var(--color-accent);
+  background: var(--color-accent-subtle);
+}
+
+.homeLink:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 40px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  position: relative;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-5);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  font-feature-settings: "kern";
+}
+
+.navLink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-accent-subtle);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  border-radius: var(--radius-lg);
+}
+
+.navLink:hover {
+  color: var(--color-text-primary);
+  background: var(--color-accent-subtle);
+  transform: translateY(-2px);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+.navLink:hover::before {
+  opacity: 0;
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Active nav link */
+.navLinkActive {
+  color: var(--color-accent);
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent-subtle-border);
+  font-weight: 600;
+}
+
+.navLinkActive::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: var(--space-5);
+  right: var(--space-5);
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+  border-radius: 1px;
+}
+
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent-subtle-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.themeToggle::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, var(--color-accent) 50%, transparent);
+  opacity: 0.1;
+  transform: rotate(-45deg) translateX(-100%);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.themeToggle:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.themeToggle:hover::before {
+  transform: rotate(-45deg) translateX(100%);
+}
+
+.themeToggle:hover .themeIcon {
+  color: var(--color-text-on-accent-hover);
+  transform: scale(1.1) rotate(15deg);
+}
+
+.themeToggle:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.themeToggle:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* ============================================================
+   THEME TOGGLE ICON
+   ============================================================ */
+
+.themeIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent);
+  transition: all var(--transition-base);
+  filter: drop-shadow(0 1px 3px var(--color-accent));
+}
+
+/* ============================================================
+   LIVE REGION (screen readers)
+   ============================================================ */
+
+.liveRegion {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVENESS
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .header {
+    height: 70px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .homeLink {
+    font-size: 16px;
+  }
+
+  .navList {
+    gap: 16px;
+  }
+
+  .navLink {
+    padding: 8px 12px;
+    font-size: 15px;
+  }
+
+  .navLinkActive::after {
+    left: 12px;
+    right: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .homeLink span {
+    display: none;
+  }
+
+  .homeLink::before {
+    content: '~/steve';
+  }
+
+  .navList {
+    gap: 12px;
+  }
+
+  .navLink {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+}
+
+/* ============================================================
+   ACCESSIBILITY & MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .navLink,
+  .themeToggle,
+  .homeLink {
+    transition: none;
+  }
+
+  .themeToggle::before {
+    transition: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .header {
+    background: var(--color-bg-primary);
+    border-bottom-color: var(--color-text-primary);
+    border-bottom-width: 2px;
+  }
+
+  .navLink,
+  .homeLink {
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-text-primary);
+  }
+
+  .navLinkActive {
+    background: var(--color-text-primary);
+    color: var(--color-bg-primary);
+  }
+
+  .themeToggle {
+    background: var(--color-text-primary);
+    border-color: var(--color-text-primary);
+  }
+
+  .themeIcon {
+    color: var(--color-bg-primary);
+  }
+}

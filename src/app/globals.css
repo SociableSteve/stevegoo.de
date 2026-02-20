@@ -1,42 +1,688 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/**
+ * globals.css
+ * Entry point for all global styles.
+ *
+ * Load order:
+ *   1. Design tokens (custom properties, no generated CSS)
+ *   2. CSS reset (normalize browser defaults)
+ *   3. Base element styles (typography, links, etc.)
+ *   4. Utility helpers (used sparingly — prefer component-level CSS Modules)
+ */
+
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+
+@import "../styles/tokens.css";
+
+/* ============================================================
+   2. CSS RESET
+   Modern opinionated reset. Combines best-of-breed from
+   Josh Comeau's reset, Andy Bell's reset, and Tailwind Preflight.
+   ============================================================ */
+
+/*
+ * Use a more-intuitive box-sizing model.
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/*
+ * Remove default margin and padding from all elements.
+ */
+* {
+  margin: 0;
+  padding: 0;
 }
 
-html,
-body {
-  max-width: 100vw;
+/*
+ * Set core root defaults.
+ * 1. Smooth scrolling with respect for reduced-motion preference.
+ * 2. Consistent font size base.
+ * 3. Prevent horizontal overflow without hiding content.
+ */
+html {
+  font-size: 100%; /* 1rem = 16px — never set px here, respect user zoom */
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
   overflow-x: hidden;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/*
+ * Core body styles.
+ * Establishes the design token connection for background and text.
+ */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100svh;
+  overflow-x: hidden;
+  padding-top: 80px; /* Account for fixed header */
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/*
+ * Improve media defaults.
+ * Images/videos should not overflow their containers.
+ */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }
+
+/*
+ * Remove built-in form typography styles.
+ */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+ * Avoid text overflow in block elements.
+ * overflow-wrap prevents long unbreakable words from overflowing.
+ */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/*
+ * Remove list styles on <ul> and <ol> elements.
+ * Re-apply in prose contexts as needed.
+ */
+ul,
+ol {
+  list-style: none;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+  border: none;
+}
+
+/*
+ * Remove default quote marks for <q>.
+ */
+q {
+  quotes: none;
+}
+
+/*
+ * Tables reset.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*
+ * HR element.
+ */
+hr {
+  border: none;
+  border-top: var(--border-width-1) solid var(--color-border);
+  margin: var(--space-8) 0;
+}
+
+/* ============================================================
+   3. THEME TRANSITIONS
+   Smooth color transitions when switching themes.
+   Disabled for users who prefer reduced motion.
+   ============================================================ */
+
+:root {
+  --theme-transition: color var(--duration-normal) var(--ease-in-out),
+                      background-color var(--duration-normal) var(--ease-in-out),
+                      border-color var(--duration-normal) var(--ease-in-out),
+                      box-shadow var(--duration-normal) var(--ease-in-out);
+}
+
+/* Apply theme transition globally — only when JS has added the class
+   to signal that a user-initiated toggle is happening. This avoids
+   a flash of transitions on initial page load. */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: var(--theme-transition) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transitioning,
+  .theme-transitioning *,
+  .theme-transitioning *::before,
+  .theme-transitioning *::after {
+    transition: none !important;
+  }
+}
+
+/* ============================================================
+   4. BASE ELEMENT STYLES
+   ============================================================ */
+
+/* ------------------------------------------------------------------
+   Typography — Headings
+   ------------------------------------------------------------------ */
+
+h1 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h1-size);
+  font-weight: var(--text-h1-weight);
+  line-height: var(--text-h1-leading);
+  letter-spacing: var(--text-h1-tracking);
+  color: var(--color-text-primary);
+}
+
+h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h2-size);
+  font-weight: var(--text-h2-weight);
+  line-height: var(--text-h2-leading);
+  letter-spacing: var(--text-h2-tracking);
+  color: var(--color-text-primary);
+}
+
+h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3-size);
+  font-weight: var(--text-h3-weight);
+  line-height: var(--text-h3-leading);
+  letter-spacing: var(--text-h3-tracking);
+  color: var(--color-text-primary);
+}
+
+h4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h4-size);
+  font-weight: var(--text-h4-weight);
+  line-height: var(--text-h4-leading);
+  letter-spacing: var(--text-h4-tracking);
+  color: var(--color-text-primary);
+}
+
+h5 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+}
+
+h6 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+}
+
+/* ------------------------------------------------------------------
+   Typography — Body text
+   ------------------------------------------------------------------ */
+
+p {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  color: var(--color-text-primary);
+}
+
+/* Larger lead paragraph variant */
+.lead {
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-leading);
+  color: var(--color-text-secondary);
+}
+
+small {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+/* ------------------------------------------------------------------
+   Typography — Inline text styles
+   ------------------------------------------------------------------ */
+
+strong,
+b {
+  font-weight: var(--font-weight-semibold);
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+mark {
+  background-color: color-mix(in srgb, var(--color-warning) 20%, transparent);
+  color: inherit;
+  padding: 0 var(--space-0-5);
+  border-radius: var(--radius-sm);
+}
+
+del {
+  color: var(--color-text-muted);
+  text-decoration-color: var(--color-text-muted);
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+/* ------------------------------------------------------------------
+   Typography — Code
+   ------------------------------------------------------------------ */
+
+code,
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-size: var(--text-code-size);
+}
+
+/* Inline code */
+:not(pre) > code {
+  background-color: var(--color-code-bg);
+  border: var(--border-width-1) solid var(--color-code-border);
+  border-radius: var(--radius-base);
+  padding: var(--space-0-5) var(--space-1-5);
+  font-size: 0.875em;   /* relative to parent for inline use */
+  word-break: break-word;
+}
+
+/* Keyboard shortcut */
+kbd {
+  background-color: var(--color-bg-secondary);
+  border: var(--border-width-1) solid var(--color-border-strong);
+  border-radius: var(--radius-base);
+  padding: var(--space-0-5) var(--space-1-5);
+  box-shadow: 0 1px 0 var(--color-border-strong);
+}
+
+/* Code blocks — styled by rehype-pretty-code, base here */
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  background-color: var(--color-code-block-bg);
+  color: var(--color-code-block-text);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  overflow-x: auto;
+  tab-size: 2;
+  -webkit-overflow-scrolling: touch;
+}
+
+pre > code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  word-break: normal;
+}
+
+/* ------------------------------------------------------------------
+   Typography — Blockquote
+   ------------------------------------------------------------------ */
+
+blockquote {
+  border-left: var(--border-width-4) solid var(--color-accent);
+  padding: var(--space-4) var(--space-6);
+  margin: var(--space-6) 0;
+  background-color: var(--color-accent-subtle);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  font-style: italic;
+}
+
+blockquote p {
+  color: inherit;
+}
+
+blockquote cite {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-style: normal;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+}
+
+blockquote cite::before {
+  content: "— ";
+}
+
+/* ------------------------------------------------------------------
+   Links
+   ------------------------------------------------------------------ */
 
 a {
-  color: inherit;
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: var(--transition-base);
+  transition-property: color, text-decoration-color, opacity;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+  text-decoration-color: currentColor;
+}
+
+/* Navigation and UI links — suppress underline for component use */
+a.no-underline,
+nav a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* ------------------------------------------------------------------
+   Focus Management — WCAG 2.1 AA compliant keyboard focus indicator
+   ------------------------------------------------------------------ */
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-base);
+}
+
+/* Larger focus ring for interactive elements that benefit from it */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-md);
+}
+
+/* ------------------------------------------------------------------
+   Selection
+   ------------------------------------------------------------------ */
+
+::selection {
+  background-color: var(--color-selection-bg);
+  color: var(--color-selection-text);
+}
+
+/* ------------------------------------------------------------------
+   Scrollbar (webkit) — minimal, theme-aware
+   ------------------------------------------------------------------ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-strong);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------------
+   Images
+   ------------------------------------------------------------------ */
+
+figure {
+  margin: var(--space-8) 0;
+}
+
+figcaption {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: var(--space-2);
+}
+
+/* ------------------------------------------------------------------
+   Horizontal Rule
+   ------------------------------------------------------------------ */
+
+hr {
+  border: none;
+  border-top: var(--border-width-1) solid var(--color-border);
+  margin: var(--space-8) 0;
+}
+
+/* ------------------------------------------------------------------
+   Details / Summary
+   ------------------------------------------------------------------ */
+
+details {
+  border: var(--border-width-1) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+summary {
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: "›";
+  display: inline-block;
+  margin-right: var(--space-2);
+  transition: transform var(--duration-fast) var(--ease-in-out);
+}
+
+details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+/* ============================================================
+   5. PROSE STYLES
+   Applied to content areas via .prose class.
+   Suitable for blog posts, articles, and MDX content.
+   ============================================================ */
+
+.prose {
+  max-width: var(--size-prose);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+}
+
+.prose > * + * {
+  margin-top: var(--space-prose-gap);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-4);
+}
+
+.prose h1:first-child,
+.prose h2:first-child,
+.prose h3:first-child,
+.prose h4:first-child {
+  margin-top: 0;
+}
+
+.prose ul,
+.prose ol {
+  list-style: revert;
+  padding-left: var(--space-6);
+}
+
+.prose li + li {
+  margin-top: var(--space-2);
+}
+
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--color-accent-hover);
+}
+
+.prose blockquote {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.prose img {
+  border-radius: var(--radius-xl);
+  border: var(--border-width-1) solid var(--color-border);
+}
+
+.prose table {
+  width: 100%;
+  font-size: var(--font-size-sm);
+  border: var(--border-width-1) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.prose th {
+  background-color: var(--color-bg-secondary);
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  border-bottom: var(--border-width-1) solid var(--color-border);
+}
+
+.prose td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border-width-1) solid var(--color-border);
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================================
+   6. LAYOUT UTILITIES
+   Structural helpers used frequently enough to be global.
+   ============================================================ */
+
+/* Container — centers content and constrains max-width */
+.container {
+  width: 100%;
+  max-width: var(--size-container);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-inline: var(--space-8);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: var(--space-12);
+  }
+}
+
+/* Section spacing */
+.section {
+  padding-block: var(--space-section-y);
+}
+
+/* Visually hidden — accessible off-screen text for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip navigation link — visible on keyboard focus only */
+.skip-to-content {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: var(--z-toast);
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-button);
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-8)));
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.skip-to-content:focus-visible {
+  transform: translateY(0);
+}
+
+/* Reduced motion override — respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

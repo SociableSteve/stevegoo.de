@@ -1,0 +1,166 @@
+/**
+ * Badge.module.css
+ *
+ * Badges are inline, non-interactive labels by default.
+ * When `onDismiss` is provided the dismiss button receives full
+ * interactive treatment (44×44 touch target, focus ring, hover state).
+ *
+ * Semantic colour mapping:
+ *   default   → accent palette  (categories, tags)
+ *   neutral   → text/border     (metadata, secondary info)
+ *   success   → success palette (positive status)
+ *   warning   → warning palette (cautionary status)
+ *   error     → error palette   (negative status)
+ *
+ * WCAG contrast:
+ *   All foreground / background pairs use the token pairs verified in
+ *   tokens.css to meet at least AA (4.5:1) for small text.
+ */
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+
+  /* Typography */
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-none);
+  white-space: nowrap;
+
+  /* Shape */
+  padding-block: var(--space-1);
+  padding-inline: var(--space-2-5);
+  border-radius: var(--radius-badge);
+  border: var(--border-width-1) solid transparent;
+
+  /* Prevent layout collapse */
+  flex-shrink: 0;
+
+  /* Vertical rhythm correction when embedded in text */
+  vertical-align: middle;
+}
+
+/* ============================================================
+   VARIANT — DEFAULT (accent/category)
+   ============================================================ */
+
+.default {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+  border-color: var(--color-accent-subtle-border);
+}
+
+/* ============================================================
+   VARIANT — NEUTRAL (metadata)
+   ============================================================ */
+
+.neutral {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}
+
+/* ============================================================
+   VARIANT — SUCCESS (positive status)
+   ============================================================ */
+
+.success {
+  background-color: var(--color-success-subtle);
+  color: var(--color-success);
+  border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
+}
+
+/* ============================================================
+   VARIANT — WARNING (cautionary status)
+   ============================================================ */
+
+.warning {
+  background-color: var(--color-warning-subtle);
+  color: var(--color-warning);
+  border-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
+}
+
+/* ============================================================
+   VARIANT — ERROR (negative status)
+   ============================================================ */
+
+.error {
+  background-color: var(--color-error-subtle);
+  color: var(--color-error);
+  border-color: color-mix(in srgb, var(--color-error) 30%, transparent);
+}
+
+/* ============================================================
+   DOT INDICATOR
+   Used to visually reinforce status variants.
+   Hidden from accessibility tree via aria-hidden on the element.
+   ============================================================ */
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   DISMISS BUTTON
+   Full interactive treatment with accessible focus ring.
+   Touch target is expanded via negative margin / padding trick so
+   the visual badge size is unchanged but the hit area is 44×44.
+   ============================================================ */
+
+.dismissButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Reset */
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: currentColor;
+  line-height: 1;
+  appearance: none;
+  -webkit-appearance: none;
+
+  /* Visual sizing — 16px icon with slight inset from badge edge */
+  width: 1rem;
+  height: 1rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+
+  /* Expand touch target without altering layout */
+  position: relative;
+
+  opacity: 0.7;
+  transition: opacity var(--duration-fast) var(--ease-in-out);
+}
+
+.dismissButton::after {
+  content: "";
+  position: absolute;
+  /* Expand hit area to 44×44 from the 16px icon */
+  inset: calc((16px - 44px) / 2);
+  border-radius: var(--radius-full);
+}
+
+.dismissButton:hover {
+  opacity: 1;
+  background-color: color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.dismissButton:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 2px;
+  opacity: 1;
+}

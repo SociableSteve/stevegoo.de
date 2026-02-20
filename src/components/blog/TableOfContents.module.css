@@ -1,0 +1,115 @@
+/**
+ * TableOfContents.module.css
+ *
+ * Sidebar navigation for article headings.
+ *
+ * Visual design:
+ *   - Flush left, no bullet markers.
+ *   - An accent left-border highlights the active section.
+ *   - Nested (h3) items are indented.
+ *   - Links are subdued by default; active link uses accent colour.
+ */
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  /* Semantic sizing — TOC does not stretch to fill its grid cell */
+  align-self: start;
+}
+
+/* ============================================================
+   HEADING ("On this page")
+   ============================================================ */
+
+.heading {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  margin: 0;
+}
+
+/* ============================================================
+   LIST
+   ============================================================ */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  /* Left accent bar container */
+  border-left: var(--border-width-2) solid var(--color-border);
+}
+
+/* ============================================================
+   LIST ITEM
+   ============================================================ */
+
+.item {
+  margin: 0;
+  padding: 0;
+}
+
+/* Nested h3 items are indented */
+.nested {
+  padding-inline-start: var(--space-3);
+}
+
+/* ============================================================
+   LINK
+   ============================================================ */
+
+.link {
+  display: block;
+  padding-block: var(--space-1);
+  padding-inline-start: var(--space-3);
+  padding-inline-end: var(--space-2);
+
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+
+  /* Negative left margin aligns the link edge flush with the accent bar */
+  margin-inline-start: calc(-1 * var(--border-width-2));
+  border-left: var(--border-width-2) solid transparent;
+
+  transition:
+    color var(--duration-fast) var(--ease-in-out),
+    border-color var(--duration-fast) var(--ease-in-out);
+}
+
+.link:hover {
+  color: var(--color-text-primary);
+  border-left-color: var(--color-border-strong);
+}
+
+.link:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   ACTIVE LINK
+   ============================================================ */
+
+.link.active {
+  color: var(--color-accent);
+  border-left-color: var(--color-accent);
+  font-weight: var(--font-weight-medium);
+}
+
+.link.active:hover {
+  color: var(--color-accent-hover);
+  border-left-color: var(--color-accent-hover);
+}

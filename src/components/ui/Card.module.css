@@ -1,0 +1,160 @@
+/**
+ * Card.module.css
+ *
+ * Card is a surface container used for blog posts, content listings,
+ * and any grouped UI section.
+ *
+ * Elevation system:
+ *   flat    → no shadow, bordered
+ *   raised  → --shadow-base (default)
+ *   elevated → --shadow-md
+ *
+ * Interactive variant:
+ *   When the card is interactive (isInteractive=true) it gains:
+ *   - cursor: pointer
+ *   - hover: shadow upgrade + subtle translateY lift
+ *   - active: scale-down feedback
+ *   - focus-visible ring on the card or its primary link
+ *
+ * Semantic markup:
+ *   The outer element is <article> for blog-post cards and <div> for
+ *   generic containers (controlled via `as` prop in the component).
+ *
+ * Reduced motion:
+ *   The lift transform is suppressed; only the shadow change remains.
+ */
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+.card {
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--color-bg-elevated);
+  border: var(--border-width-1) solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-card-padding);
+
+  /* Clip child content to rounded corners */
+  overflow: hidden;
+
+  /* Let the card fill its grid / flex cell */
+  width: 100%;
+
+  /* Stack children with consistent vertical rhythm */
+  gap: var(--space-4);
+
+  /* Motion */
+  transition:
+    box-shadow var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+/* ============================================================
+   ELEVATION VARIANTS
+   ============================================================ */
+
+.flat {
+  box-shadow: var(--shadow-none);
+}
+
+.raised {
+  box-shadow: var(--shadow-base);
+}
+
+.elevated {
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================================
+   INTERACTIVE CARD
+   An interactive card is one whose primary action is the card itself
+   (e.g. a blog post list item that navigates on click).
+   ============================================================ */
+
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--color-border-strong);
+}
+
+.interactive:active {
+  transform: var(--interact-active-scale);
+  box-shadow: var(--shadow-base);
+}
+
+/*
+ * When the card IS interactive but contains a primary link/button,
+ * the focus ring should appear on the card element itself so the
+ * keyboard affordance is visually clear.
+ */
+.interactive:focus-visible,
+.interactive:focus-within:has(a:focus-visible),
+.interactive:focus-within:has(button:focus-visible) {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive:hover {
+    transform: none;
+  }
+
+  .interactive:active {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   CARD INNER LAYOUT SLOTS
+   Consumers compose these via the exported sub-components:
+   <Card.Header />, <Card.Body />, <Card.Footer />
+   ============================================================ */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1; /* Body stretches so footer is always at the bottom */
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: var(--border-width-1) solid var(--color-border);
+  margin-top: auto;
+}
+
+/* ============================================================
+   NO PADDING MODIFIER
+   Used when the card contains an image or map that must bleed to edges.
+   ============================================================ */
+
+.noPadding {
+  padding: 0;
+}
+
+.noPadding .header,
+.noPadding .body,
+.noPadding .footer {
+  padding: var(--space-card-padding);
+}
+
+.noPadding .footer {
+  padding-top: var(--space-4);
+}
