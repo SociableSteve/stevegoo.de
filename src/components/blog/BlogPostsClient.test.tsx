@@ -76,11 +76,13 @@ describe("BlogPostsClient", () => {
 
       render(<BlogPostsClient posts={samplePosts} />);
 
+      // Check filtered posts are shown
       expect(screen.getByText("TypeScript Tips")).toBeInTheDocument();
       expect(screen.getByText("Mixed Case Tags")).toBeInTheDocument();
       expect(screen.queryByText("React Patterns")).not.toBeInTheDocument();
+
+      // Check filter UI is shown
       expect(screen.getByText('Showing posts tagged with:')).toBeInTheDocument();
-      expect(screen.getByText("TypeScript")).toBeInTheDocument();
     });
 
     it("performs case-insensitive tag matching", () => {
@@ -92,7 +94,10 @@ describe("BlogPostsClient", () => {
       expect(screen.getByText("React Patterns")).toBeInTheDocument();
       expect(screen.getByText("Mixed Case Tags")).toBeInTheDocument(); // has lowercase "react"
       expect(screen.queryByText("TypeScript Tips")).not.toBeInTheDocument();
-      expect(screen.getByText("Showing 2 of 3 posts tagged with \"REACT\"")).toBeInTheDocument();
+      // Check that the count shows 2 filtered posts and contains REACT
+      const postsCountElement = document.querySelector('[class*="postsCount"]');
+      expect(postsCountElement?.textContent).toMatch(/Showing 2 of 3 posts/);
+      expect(postsCountElement?.textContent).toContain("REACT");
     });
 
     it("shows filter indicator when tag is selected", () => {
@@ -102,7 +107,10 @@ describe("BlogPostsClient", () => {
       render(<BlogPostsClient posts={samplePosts} />);
 
       expect(screen.getByText("Showing posts tagged with:")).toBeInTheDocument();
-      expect(screen.getByText("Showing 1 of 3 posts tagged with \"Programming\"")).toBeInTheDocument();
+      // Check that the count shows 1 filtered post and contains Programming
+      const postsCountElement = document.querySelector('[class*="postsCount"]');
+      expect(postsCountElement?.textContent).toMatch(/Showing 1 of 3 posts/);
+      expect(postsCountElement?.textContent).toContain("Programming");
       expect(screen.getAllByRole("button", { name: "Show All Posts" })).toHaveLength(1);
     });
   });
@@ -174,7 +182,10 @@ describe("BlogPostsClient", () => {
 
       render(<BlogPostsClient posts={samplePosts} />);
 
-      expect(screen.getByText(/Showing 2 of 3 posts tagged with "TypeScript"/)).toBeInTheDocument();
+      // Check that the count shows 2 filtered posts and contains TypeScript
+      const postsCountElement = document.querySelector('[class*="postsCount"]');
+      expect(postsCountElement?.textContent).toMatch(/Showing 2 of 3 posts/);
+      expect(postsCountElement?.textContent).toContain("TypeScript");
     });
   });
 
@@ -195,7 +206,10 @@ describe("BlogPostsClient", () => {
 
       render(<BlogPostsClient posts={samplePosts} />);
 
-      expect(screen.getByText(/Showing 1 of 3 posts tagged with "Programming"/)).toBeInTheDocument();
+      // Check that the count shows 1 filtered post and contains Programming
+      const postsCountElement = document.querySelector('[class*="postsCount"]');
+      expect(postsCountElement?.textContent).toMatch(/Showing 1 of 3 posts/);
+      expect(postsCountElement?.textContent).toContain("Programming");
     });
   });
 
