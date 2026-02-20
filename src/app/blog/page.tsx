@@ -20,7 +20,9 @@ export default async function BlogPage() {
   const postRepository = new MarkdownPostRepository();
 
   // Get all published posts for client-side filtering
-  const postsResult = await postRepository.findPublished({ page: 1, perPage: 100 });
+  // Using a large perPage to effectively get all posts for now
+  // TODO: Consider adding a non-paginated findAllPublished method
+  const postsResult = await postRepository.findPublished({ page: 1, perPage: 1000 });
 
 
   return (

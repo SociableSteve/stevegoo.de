@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { PostCard } from "@/components/blog/PostCard";
 import { Badge } from "@/components/ui";
 import { Card } from "@/components/ui/Card";
@@ -15,9 +15,10 @@ interface BlogPostsClientProps {
 export function BlogPostsClient({ posts }: BlogPostsClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
 
   // Get the tag from URL params directly
-  const selectedTag = searchParams.get('tag');
+  const selectedTag = searchParams.get("tag");
 
   // Filter posts based on selected tag
   const filteredPosts = useMemo(() => {
@@ -33,7 +34,13 @@ export function BlogPostsClient({ posts }: BlogPostsClientProps) {
 
 
   const clearFilter = () => {
-    router.push('/blog');
+    // Create new URL params without the tag filter
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.delete("tag");
+
+    const queryString = newParams.toString();
+    const url = queryString ? `${pathname}?${queryString}` : pathname;
+    router.push(url);
   };
 
   return (

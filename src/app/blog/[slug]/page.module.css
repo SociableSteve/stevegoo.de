@@ -302,3 +302,18 @@
     border-left-width: 6px;
   }
 }
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .tagLink,
+  .breadcrumbLink,
+  .navigationLink,
+  .backToTopButton,
+  .externalLink {
+    transition: none;
+  }
+
+  .tagLink:hover {
+    transform: none;
+  }
+}

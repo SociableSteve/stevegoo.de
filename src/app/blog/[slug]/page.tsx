@@ -93,7 +93,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 {/* Tags below metadata for better information hierarchy */}
                 {post.tags && post.tags.length > 0 && (
-                  <div className={styles["headerTags"]} aria-label="Post tags">
+                  <nav className={styles["headerTags"]} aria-label="Post tags">
                     {post.tags.map((tag, index) => (
                       <Link
                         key={`tag-${index}-${tag}`}
@@ -105,7 +105,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         </Badge>
                       </Link>
                     ))}
-                  </div>
+                  </nav>
                 )}
 
                 <hr className={styles["divider"]} aria-hidden="true" />

@@ -105,11 +105,10 @@ export function PostMeta({
   if (readingTimeMinutes != null && readingTimeMinutes > 0) {
     items.push(
       <span key="reading-time" className={styles["readingTime"]}>
-        {/* aria-label provides a natural sentence for screen readers
-            rather than "3 min read" which loses the "approximately" sense */}
+        {/* aria-label provides a natural sentence for screen readers */}
         <abbr
           title={`Approximately ${readingTimeMinutes} minute${readingTimeMinutes === 1 ? "" : "s"} to read`}
-          aria-label={`${readingTimeMinutes} min read`}
+          aria-label={`Approximately ${readingTimeMinutes} minute${readingTimeMinutes === 1 ? "" : "s"} to read`}
         >
           {readingTimeMinutes} min read
         </abbr>
