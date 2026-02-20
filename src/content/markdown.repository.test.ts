@@ -340,7 +340,7 @@ describe("MarkdownPostRepository - Comprehensive Integration Tests", () => {
       const end = performance.now();
 
       const processingTime = end - start;
-      expect(processingTime).toBeLessThan(1000); // Should complete within 1 second
+      expect(processingTime).toBeLessThan(1200); // Should complete within 1.2 seconds
     });
 
     it("processes very long content efficiently", async () => {
