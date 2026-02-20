@@ -117,7 +117,7 @@ describe("MarkdownPostRepository", () => {
 
   describe("markdown processing", () => {
     it("processes markdown content with syntax highlighting", async () => {
-      const slug = createPostSlug("ai-wont-tell-you-when-its-wrong");
+      const slug = createPostSlug("typescript-generics");
       const post = await repository.findBySlug(slug);
 
       expect(post).not.toBeNull();
