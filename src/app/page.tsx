@@ -166,7 +166,7 @@ export default async function HomePage() {
                 engineering excellence.
               </p>
               <div className={styles["ctaActions"]}>
-                <Link href="mailto:steve@example.com" className={styles["buttonPrimary"]}>Get In Touch</Link>
+                <Link href="https://www.linkedin.com/in/steve-goode-2488853/" className={styles["buttonPrimary"]}>Connect on LinkedIn</Link>
                 <Link href="/blog" className={styles["buttonSecondary"]}>Read More</Link>
               </div>
             </div>

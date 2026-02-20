@@ -110,8 +110,8 @@ export const SITE_CONFIG: SiteConfig = parseSiteConfig({
   authorName: process.env["NEXT_PUBLIC_AUTHOR_NAME"] ?? "Steve Goode",
   authorEmail: process.env["NEXT_PUBLIC_AUTHOR_EMAIL"] ?? "steve@stevegoode.dev",
   twitterHandle: process.env["NEXT_PUBLIC_TWITTER_HANDLE"] ?? null,
-  githubUsername: process.env["NEXT_PUBLIC_GITHUB_USERNAME"] ?? "stevegoode",
-  linkedinUsername: process.env["NEXT_PUBLIC_LINKEDIN_USERNAME"] ?? "stevegoode",
+  githubUsername: process.env["NEXT_PUBLIC_GITHUB_USERNAME"] ?? "sociablesteve",
+  linkedinUsername: process.env["NEXT_PUBLIC_LINKEDIN_USERNAME"] ?? "steve-goode-2488853",
   postsPerPage: process.env["NEXT_PUBLIC_POSTS_PER_PAGE"]
     ? parseInt(process.env["NEXT_PUBLIC_POSTS_PER_PAGE"], 10)
     : 10,

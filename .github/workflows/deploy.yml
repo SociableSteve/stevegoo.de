@@ -70,8 +70,8 @@ jobs:
     env:
       NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://stevegoode.dev' }}
       NEXT_PUBLIC_SITE_NAME: ${{ vars.NEXT_PUBLIC_SITE_NAME || 'Steve Goode' }}
-      NEXT_PUBLIC_GITHUB_USERNAME: ${{ vars.NEXT_PUBLIC_GITHUB_USERNAME || 'stevegoode' }}
-      NEXT_PUBLIC_LINKEDIN_USERNAME: ${{ vars.NEXT_PUBLIC_LINKEDIN_USERNAME || 'stevegoode' }}
+      NEXT_PUBLIC_GITHUB_USERNAME: ${{ vars.NEXT_PUBLIC_GITHUB_USERNAME || 'sociablesteve' }}
+      NEXT_PUBLIC_LINKEDIN_USERNAME: ${{ vars.NEXT_PUBLIC_LINKEDIN_USERNAME || 'steve-goode-2488853' }}
       NEXT_PUBLIC_AUTHOR_EMAIL: ${{ vars.NEXT_PUBLIC_AUTHOR_EMAIL || 'steve@stevegoode.dev' }}
 
     steps:

@@ -176,10 +176,10 @@ export default function AboutPage() {
               building exceptional engineering teams.
             </p>
             <a
-              href="mailto:steve@example.com"
+              href="https://www.linkedin.com/in/steve-goode-2488853/"
               className={styles["contactButton"]}
             >
-              Get In Touch
+              Connect on LinkedIn
             </a>
           </Card>
         </div>
