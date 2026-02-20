@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -24,15 +24,14 @@ interface ThemeProviderProps {
 }
 
 export default function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>("light");
-
-  useEffect(() => {
+  const [theme, setTheme] = useState<Theme>(() => {
     // Read theme from data-theme attribute set by the inline script
+    // Only run in browser environment (not during SSR)
+    if (typeof document === "undefined") return "light";
+
     const dataTheme = document.documentElement.dataset["theme"] as Theme;
-    if (dataTheme === "light" || dataTheme === "dark") {
-      setTheme(dataTheme);
-    }
-  }, []);
+    return (dataTheme === "light" || dataTheme === "dark") ? dataTheme : "light";
+  });
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";

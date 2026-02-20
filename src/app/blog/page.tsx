@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Suspense, use } from "react";
+import { Suspense } from "react";
 import { MarkdownPostRepository } from "@/content/markdown.repository";
 import { PostCard } from "@/components/blog/PostCard";
 import { CategoryFilter } from "@/components/blog/CategoryFilter";

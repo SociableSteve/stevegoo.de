@@ -11,7 +11,7 @@ describe("Bundle Boundary Verification Tests", () => {
     // Ensure we have a production build to analyze
     // Only build if the .next directory doesn't exist
     if (!fs.existsSync(outDir)) {
-      console.log("Building production bundle for analysis...");
+      console.warn("Building production bundle for analysis...");
       try {
         execSync("npm run build", {
           stdio: "inherit",
@@ -80,7 +80,7 @@ describe("Bundle Boundary Verification Tests", () => {
         );
       }
 
-      console.log(`✓ Verified ${chunkFiles.length} client chunks are free of syntax highlighting code`);
+      console.warn(`✓ Verified ${chunkFiles.length} client chunks are free of syntax highlighting code`);
     });
 
     it("verifies rehype/remark processing stays server-side", () => {
@@ -138,7 +138,7 @@ describe("Bundle Boundary Verification Tests", () => {
         );
       }
 
-      console.log(`✓ Verified ${chunkFiles.length} client chunks minimize markdown processing code`);
+      console.warn(`✓ Verified ${chunkFiles.length} client chunks minimize markdown processing code`);
     });
   });
 
@@ -201,13 +201,13 @@ describe("Bundle Boundary Verification Tests", () => {
         }
       }, 0) / 1024;
 
-      console.log(`✓ Total client bundle size: ${Math.round(totalSizeKB)}KB across ${chunkFiles.length} chunks`);
-      console.log(`✓ Average chunk size: ${Math.round(totalSizeKB / chunkFiles.length)}KB`);
+      console.warn(`✓ Total client bundle size: ${Math.round(totalSizeKB)}KB across ${chunkFiles.length} chunks`);
+      console.warn(`✓ Average chunk size: ${Math.round(totalSizeKB / chunkFiles.length)}KB`);
 
       if (oversizedChunks.length > 0) {
-        console.log(`⚠️  ${oversizedChunks.length} chunks exceed 50KB budget`);
+        console.warn(`⚠️  ${oversizedChunks.length} chunks exceed 50KB budget`);
       } else {
-        console.log(`✓ All chunks are within 50KB budget`);
+        console.warn(`✓ All chunks are within 50KB budget`);
       }
     });
 
@@ -241,7 +241,7 @@ describe("Bundle Boundary Verification Tests", () => {
         const firstLoadKB = Math.round(firstLoadSize / 1024);
         const FIRST_LOAD_LIMIT = 100 * 1024; // 100KB limit for first load
 
-        console.log(`✓ First Load JS: ${firstLoadKB}KB`);
+        console.warn(`✓ First Load JS: ${firstLoadKB}KB`);
 
         if (firstLoadSize > FIRST_LOAD_LIMIT) {
           console.warn(
@@ -249,7 +249,7 @@ describe("Bundle Boundary Verification Tests", () => {
             "Consider code splitting or reducing initial bundle size."
           );
         } else {
-          console.log(`✓ First Load JS is within recommended 100KB limit`);
+          console.warn(`✓ First Load JS is within recommended 100KB limit`);
         }
 
         expect(firstLoadKB).toBeLessThan(200); // Hard limit of 200KB
@@ -288,12 +288,12 @@ describe("Bundle Boundary Verification Tests", () => {
         }
       });
 
-      console.log("Bundle composition:");
-      console.log(`  - Framework chunks: ${composition.framework}`);
-      console.log(`  - Page chunks: ${composition.pages}`);
-      console.log(`  - Shared chunks: ${composition.shared}`);
-      console.log(`  - Other chunks: ${composition.other}`);
-      console.log(`  - Total chunks: ${chunkFiles.length}`);
+      console.warn("Bundle composition:");
+      console.warn(`  - Framework chunks: ${composition.framework}`);
+      console.warn(`  - Page chunks: ${composition.pages}`);
+      console.warn(`  - Shared chunks: ${composition.shared}`);
+      console.warn(`  - Other chunks: ${composition.other}`);
+      console.warn(`  - Total chunks: ${chunkFiles.length}`);
 
       // Basic sanity checks
       expect(chunkFiles.length).toBeGreaterThan(0);
@@ -352,7 +352,7 @@ describe("Bundle Boundary Verification Tests", () => {
           "This may indicate incomplete minification or production optimization."
         );
       } else {
-        console.log(`✓ No obvious development code found in ${chunkFiles.length} production chunks`);
+        console.warn(`✓ No obvious development code found in ${chunkFiles.length} production chunks`);
       }
     });
   });
