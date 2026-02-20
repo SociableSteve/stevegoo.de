@@ -38,7 +38,7 @@
     radial-gradient(circle at 25% 25%, color-mix(in srgb, var(--color-accent) 8%, transparent) 0%, transparent 50%),
     radial-gradient(circle at 75% 75%, color-mix(in srgb, var(--color-accent) 5%, transparent) 0%, transparent 50%),
     linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--color-accent) 3%, transparent) 50%, transparent 100%);
-  animation: atmosphereShift 30s ease-in-out infinite;
+  animation: atmosphereShift 8s ease-in-out infinite;
   pointer-events: none;
 }
 
@@ -79,7 +79,7 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-wide);
   opacity: 0;
-  animation: codeComment 0.6s ease-out 0.1s forwards;
+  animation: codeComment 0.3s ease-out 0.05s forwards;
 }
 
 @keyframes codeComment {
@@ -105,7 +105,7 @@
   position: relative;
   overflow: hidden;
   opacity: 0;
-  animation: roleTagReveal 0.5s ease-out 0.15s forwards;
+  animation: roleTagReveal 0.25s ease-out 0.08s forwards;
 }
 
 .roleTag::before {
@@ -119,7 +119,7 @@
     transparent,
     color-mix(in srgb, var(--color-accent) 30%, transparent),
     transparent);
-  animation: shimmer 3s ease-in-out 2s infinite;
+  animation: shimmer 1.5s ease-in-out 0.8s infinite;
 }
 
 @keyframes roleTagReveal {
@@ -141,7 +141,7 @@
   color: var(--color-text-primary);
   margin: 0 0 var(--space-8);
   opacity: 0;
-  animation: titleReveal 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
+  animation: titleReveal 0.3s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
 }
 
 @keyframes titleReveal {
@@ -156,7 +156,7 @@
   margin: 0 0 var(--space-14);
   max-width: 540px;
   opacity: 0;
-  animation: descriptionReveal 0.5s ease-out 0.3s forwards;
+  animation: descriptionReveal 0.25s ease-out 0.15s forwards;
 }
 
 @keyframes descriptionReveal {
@@ -169,7 +169,7 @@
   gap: var(--space-5);
   flex-wrap: wrap;
   opacity: 0;
-  animation: actionsReveal 0.5s ease-out 0.4s forwards;
+  animation: actionsReveal 0.25s ease-out 0.2s forwards;
 }
 
 @keyframes actionsReveal {
@@ -241,7 +241,7 @@
   background-size: 40px 40px;
   border-radius: var(--radius-xl);
   opacity: 0;
-  animation: gridReveal 0.8s ease-out 0.5s forwards, gridPulse 6s ease-in-out 2s infinite;
+  animation: gridReveal 0.4s ease-out 0.25s forwards, gridPulse 3s ease-in-out 1s infinite;
 }
 
 .heroGrid::after {
@@ -253,7 +253,7 @@
   bottom: 20%;
   background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 15%, transparent) 0%, transparent 70%);
   border-radius: var(--radius-lg);
-  animation: pulseCore 5s ease-in-out 1.5s infinite;
+  animation: pulseCore 2.5s ease-in-out 0.8s infinite;
 }
 
 @keyframes gridReveal {
