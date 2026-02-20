@@ -21,7 +21,7 @@ describe("ThemeProvider", () => {
     // Clear localStorage
     localStorage.clear();
     // Reset document data-theme
-    delete document.documentElement.dataset.theme;
+    delete document.documentElement.dataset['theme'];
   });
 
   it("provides initial theme as light by default", () => {
@@ -35,7 +35,7 @@ describe("ThemeProvider", () => {
   });
 
   it("reads initial theme from data-theme attribute", () => {
-    document.documentElement.dataset.theme = "dark";
+    document.documentElement.dataset['theme'] = "dark";
 
     render(
       <ThemeProvider>
@@ -65,13 +65,13 @@ describe("ThemeProvider", () => {
     await user.click(toggleButton);
     expect(themeDisplay).toHaveTextContent("dark");
     expect(localStorage.getItem("theme")).toBe("dark");
-    expect(document.documentElement.dataset.theme).toBe("dark");
+    expect(document.documentElement.dataset['theme']).toBe("dark");
 
     // Toggle back to light
     await user.click(toggleButton);
     expect(themeDisplay).toHaveTextContent("light");
     expect(localStorage.getItem("theme")).toBe("light");
-    expect(document.documentElement.dataset.theme).toBe("light");
+    expect(document.documentElement.dataset['theme']).toBe("light");
   });
 
   it("throws error when useTheme is used outside provider", () => {

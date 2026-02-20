@@ -19,7 +19,7 @@ describe("Bundle Boundary Verification Tests", () => {
           timeout: 120000 // 2 minutes timeout
         });
       } catch (error) {
-        console.warn("Build failed, tests may be unreliable:", error.message);
+        console.warn("Build failed, tests may be unreliable:", error instanceof Error ? error.message : String(error));
       }
     }
   }, 150000); // 2.5 minutes timeout for build
@@ -35,7 +35,7 @@ describe("Bundle Boundary Verification Tests", () => {
         .filter(file => file.endsWith(".js"))
         .map(file => path.join(staticChunksDir, file));
 
-      expect(chunkFiles.length).toBeGreaterThan(0, "Should have JavaScript chunk files");
+      expect(chunkFiles.length, "Should have JavaScript chunk files").toBeGreaterThan(0);
 
       const shikiSignatures = [
         "shiki",
@@ -64,7 +64,7 @@ describe("Bundle Boundary Verification Tests", () => {
             });
           }
         } catch (error) {
-          console.warn(`Failed to read chunk file ${chunkFile}:`, error.message);
+          console.warn(`Failed to read chunk file ${chunkFile}:`, error instanceof Error ? error.message : String(error));
         }
       });
 
@@ -122,7 +122,7 @@ describe("Bundle Boundary Verification Tests", () => {
             });
           }
         } catch (error) {
-          console.warn(`Failed to read chunk file ${chunkFile}:`, error.message);
+          console.warn(`Failed to read chunk file ${chunkFile}:`, error instanceof Error ? error.message : String(error));
         }
       });
 
@@ -156,7 +156,7 @@ describe("Bundle Boundary Verification Tests", () => {
           path: path.join(staticChunksDir, file)
         }));
 
-      expect(chunkFiles.length).toBeGreaterThan(0, "Should have JavaScript chunk files");
+      expect(chunkFiles.length, "Should have JavaScript chunk files").toBeGreaterThan(0);
 
       const CHUNK_SIZE_LIMIT = 50 * 1024; // 50KB in bytes
       const oversizedChunks: { name: string; size: number; sizeKB: number }[] = [];
@@ -174,7 +174,7 @@ describe("Bundle Boundary Verification Tests", () => {
             });
           }
         } catch (error) {
-          console.warn(`Failed to get size for chunk ${name}:`, error.message);
+          console.warn(`Failed to get size for chunk ${name}:`, error instanceof Error ? error.message : String(error));
         }
       });
 
@@ -254,7 +254,7 @@ describe("Bundle Boundary Verification Tests", () => {
 
         expect(firstLoadKB).toBeLessThan(200); // Hard limit of 200KB
       } catch (error) {
-        console.warn("Failed to analyze first load JS:", error.message);
+        console.warn("Failed to analyze first load JS:", error instanceof Error ? error.message : String(error));
       }
     });
   });
@@ -338,7 +338,7 @@ describe("Bundle Boundary Verification Tests", () => {
             });
           }
         } catch (error) {
-          console.warn(`Failed to read chunk file ${chunkFile}:`, error.message);
+          console.warn(`Failed to read chunk file ${chunkFile}:`, error instanceof Error ? error.message : String(error));
         }
       });
 
