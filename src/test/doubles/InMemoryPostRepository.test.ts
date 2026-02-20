@@ -20,14 +20,11 @@ import { buildPost, buildPosts, createPostSlug } from "@/test/helpers/post.build
 import {
   ALL_POSTS,
   PUBLISHED_POSTS,
-  ENGINEERING_POSTS,
-  CAREER_POSTS,
   POST_TYPESCRIPT_GENERICS,
   POST_CLEAN_ARCHITECTURE,
   POST_DRAFT_WIP,
   POST_DRAFT_NO_CATEGORY,
   POST_EXTERNAL_DEVTO,
-  POST_NO_CATEGORY,
 } from "@/test/fixtures/post.fixtures";
 
 // ---------------------------------------------------------------------------

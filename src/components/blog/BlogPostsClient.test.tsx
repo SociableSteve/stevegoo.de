@@ -52,7 +52,7 @@ describe("BlogPostsClient", () => {
   ];
 
   beforeEach(() => {
-    mockUseRouter.mockReturnValue({ push: mockPush } as any);
+    mockUseRouter.mockReturnValue({ push: mockPush } as ReturnType<typeof useRouter>);
     mockUsePathname.mockReturnValue("/blog");
     mockPush.mockClear();
   });
@@ -60,7 +60,7 @@ describe("BlogPostsClient", () => {
   describe("tag filtering", () => {
     it("shows all posts when no tag filter is active", () => {
       const mockSearchParams = new URLSearchParams();
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -72,7 +72,7 @@ describe("BlogPostsClient", () => {
 
     it("filters posts by exact tag match", () => {
       const mockSearchParams = new URLSearchParams("tag=TypeScript");
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -85,7 +85,7 @@ describe("BlogPostsClient", () => {
 
     it("performs case-insensitive tag matching", () => {
       const mockSearchParams = new URLSearchParams("tag=REACT");
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -97,7 +97,7 @@ describe("BlogPostsClient", () => {
 
     it("shows filter indicator when tag is selected", () => {
       const mockSearchParams = new URLSearchParams("tag=Programming");
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -110,7 +110,7 @@ describe("BlogPostsClient", () => {
   describe("empty states", () => {
     it("shows no posts found state when tag has no matches", () => {
       const mockSearchParams = new URLSearchParams("tag=NonExistentTag");
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -121,7 +121,7 @@ describe("BlogPostsClient", () => {
 
     it("shows general empty state when no posts exist", () => {
       const mockSearchParams = new URLSearchParams();
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={[]} />);
 
@@ -134,7 +134,7 @@ describe("BlogPostsClient", () => {
   describe("clear filter navigation", () => {
     it("navigates to blog page when clear filter is clicked", () => {
       const mockSearchParams = new URLSearchParams("tag=TypeScript");
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -146,7 +146,7 @@ describe("BlogPostsClient", () => {
 
     it("navigates from empty state clear button", () => {
       const mockSearchParams = new URLSearchParams("tag=NonExistentTag");
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -161,7 +161,7 @@ describe("BlogPostsClient", () => {
     it("shows correct singular/plural post counts", () => {
       const singlePost = [samplePosts[0]];
       const mockSearchParams = new URLSearchParams();
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={singlePost} />);
 
@@ -170,7 +170,7 @@ describe("BlogPostsClient", () => {
 
     it("shows correct filtered count with tag name", () => {
       const mockSearchParams = new URLSearchParams("tag=TypeScript");
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -181,7 +181,7 @@ describe("BlogPostsClient", () => {
   describe("accessibility", () => {
     it("has proper button roles and labels", () => {
       const mockSearchParams = new URLSearchParams("tag=TypeScript");
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -191,7 +191,7 @@ describe("BlogPostsClient", () => {
 
     it("includes screen reader friendly post count text", () => {
       const mockSearchParams = new URLSearchParams("tag=Programming");
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       render(<BlogPostsClient posts={samplePosts} />);
 
@@ -202,7 +202,7 @@ describe("BlogPostsClient", () => {
   describe("grid layout", () => {
     it("renders posts in a grid layout", () => {
       const mockSearchParams = new URLSearchParams();
-      mockUseSearchParams.mockReturnValue(mockSearchParams as any);
+      mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
       const { container } = render(<BlogPostsClient posts={samplePosts} />);
       const grid = container.querySelector('[class*="postsGrid"]');
