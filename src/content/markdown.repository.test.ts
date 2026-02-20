@@ -22,7 +22,11 @@ describe("MarkdownPostRepository", () => {
 
       // Check sorting (newest first)
       for (let i = 0; i < posts.length - 1; i++) {
-        expect(posts[i].publishedAt >= posts[i + 1].publishedAt).toBe(true);
+        const currentPost = posts[i];
+        const nextPost = posts[i + 1];
+        if (currentPost && nextPost) {
+          expect(currentPost.publishedAt >= nextPost.publishedAt).toBe(true);
+        }
       }
 
       // Should include drafts
@@ -71,12 +75,12 @@ describe("MarkdownPostRepository", () => {
     });
 
     it("handles pagination", async () => {
-      const result = await repository.findPublished({ page: 1, limit: 2 });
+      const result = await repository.findPublished({ page: 1, perPage: 2 });
 
       expect(result.items.length).toBeLessThanOrEqual(2);
-      expect(result.pagination.page).toBe(1);
-      expect(result.pagination.limit).toBe(2);
-      expect(result.pagination.totalPages).toBeGreaterThanOrEqual(1);
+      expect(result.page).toBe(1);
+      expect(result.perPage).toBe(2);
+      expect(result.totalPages).toBeGreaterThanOrEqual(1);
     });
   });
 
@@ -96,7 +100,7 @@ describe("MarkdownPostRepository", () => {
       const result = await repository.findByCategory(category);
 
       expect(result.items).toHaveLength(0);
-      expect(result.pagination.totalItems).toBe(0);
+      expect(result.total).toBe(0);
     });
   });
 
@@ -449,6 +453,10 @@ describe("MarkdownPostRepository - Comprehensive Integration Tests", () => {
 
       // All results should be identical
       const firstResult = results[0];
+      if (!firstResult) {
+        throw new Error('Expected at least one result from concurrent calls');
+      }
+
       results.slice(1).forEach(result => {
         expect(result).toEqual(firstResult);
       });
@@ -481,7 +489,7 @@ describe("MarkdownPostRepository - Comprehensive Integration Tests", () => {
       ];
 
       features.forEach(({ name, pattern }) => {
-        expect(content).toMatch(pattern, `${name} should be properly rendered`);
+        expect(content, `${name} should be properly rendered`).toMatch(pattern);
       });
     });
 
@@ -495,7 +503,7 @@ describe("MarkdownPostRepository - Comprehensive Integration Tests", () => {
       const h2Match = content.search(/<h2[^>]*>/);
 
       if (h1Match !== -1 && h2Match !== -1) {
-        expect(h1Match).toBeLessThan(h2Match, "h1 should come before h2");
+        expect(h1Match, "h1 should come before h2").toBeLessThan(h2Match);
       }
 
       // Check that nested lists are properly structured
