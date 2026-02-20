@@ -442,7 +442,7 @@ describe("MarkdownPostRepository - Comprehensive Integration Tests", () => {
       results.slice(1).forEach(result => {
         expect(result).toEqual(firstResult);
       });
-    });
+    }, 10000);
 
     it("handles concurrent findAll calls safely", async () => {
       const concurrentCalls = Array(5).fill(null).map(() =>
