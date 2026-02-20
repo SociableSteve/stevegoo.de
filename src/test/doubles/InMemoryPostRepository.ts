@@ -23,9 +23,7 @@
  *   matching the interface documentation.
  *
  * Filter contract:
- * - findPublished and findByCategory exclude draft === true posts.
- * - findByCategory additionally filters by an exact match on the category
- *   field; posts with a null/undefined category are always excluded.
+ * - findPublished excludes draft === true posts.
  * - findAll returns ALL posts regardless of draft status.
  *
  * Single Responsibility: this class is only responsible for storing and
@@ -33,7 +31,7 @@
  * HTTP, Markdown parsing, or any other infrastructure concern.
  */
 
-import type { Post, PostSummary, PostSlug, CategorySlug } from "@/content/post.types";
+import type { Post, PostSummary, PostSlug } from "@/content/post.types";
 import type {
   PostRepository,
   PaginationParams,
@@ -130,21 +128,6 @@ export class InMemoryPostRepository implements PostRepository {
     return this.posts.find((p) => p.slug === slug) ?? null;
   }
 
-  /**
-   * Returns a paginated page of published PostSummary objects filtered by
-   * category.  Posts with draft === true or a null/undefined category are
-   * always excluded.
-   */
-  async findByCategory(
-    category: CategorySlug,
-    pagination: PaginationParams,
-  ): Promise<PaginatedResult<PostSummary>> {
-    const matching = this.posts
-      .filter((p) => !p.draft && p.category === category)
-      .map(toSummary);
-
-    return paginate(matching, pagination);
-  }
 
   /**
    * Returns a paginated page of published PostSummary objects across all

@@ -107,15 +107,12 @@ export function PostCard({ post, className }: PostCardProps) {
         className={[styles["postCard"], className].filter(Boolean).join(" ")}
       >
         <CardHeader>
-          {/* Category badge — placed above title to establish context */}
-          <div className={styles["badgeRow"]}>
-            {post.category != null && post.category !== "" && (
-              <Badge variant="default">{post.category}</Badge>
-            )}
-            {isExternal && (
+          {/* External badge — indicates external posts */}
+          {isExternal && (
+            <div className={styles["badgeRow"]}>
               <Badge variant="neutral">External</Badge>
-            )}
-          </div>
+            </div>
+          )}
 
           <h2 className={styles["title"]}>
             {post.title}
@@ -141,7 +138,6 @@ export function PostCard({ post, className }: PostCardProps) {
         </CardBody>
 
         <CardFooter>
-          {/* category is intentionally omitted — already shown in card header */}
           <PostMeta
             publishedAt={post.publishedAt}
             updatedAt={post.updatedAt}

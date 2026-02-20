@@ -2,9 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   PostFrontmatterSchema,
   createPostSlug,
-  createCategorySlug,
   type PostSlug,
-  type CategorySlug,
   type Post,
   type PostSummary,
 } from "./post.types";
@@ -20,9 +18,6 @@ function _acceptsPostSlug(_slug: PostSlug): void {
   // intentionally empty - tests that the branded type is accepted
 }
 
-function _acceptsCategorySlug(_slug: CategorySlug): void {
-  // intentionally empty
-}
 
 // Verify the factory functions return the correct branded shapes at runtime
 describe("createPostSlug", () => {
@@ -45,18 +40,6 @@ describe("createPostSlug", () => {
   });
 });
 
-describe("createCategorySlug", () => {
-  it("wraps a raw string into a CategorySlug", () => {
-    const slug = createCategorySlug("engineering");
-    expect(slug).toBe("engineering");
-    _acceptsCategorySlug(slug);
-  });
-
-  it("preserves the exact string value", () => {
-    const raw = "web-development";
-    expect(createCategorySlug(raw)).toBe(raw);
-  });
-});
 
 // ---------------------------------------------------------------------------
 // PostFrontmatterSchema — Zod validation
@@ -88,7 +71,6 @@ describe("PostFrontmatterSchema", () => {
         publishedAt: "2024-03-15",
         updatedAt: "2024-04-01",
         tags: ["typescript", "nextjs"],
-        category: "engineering",
         draft: true,
         externalUrl: "https://example.com/my-post",
       };
@@ -98,7 +80,6 @@ describe("PostFrontmatterSchema", () => {
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.data.updatedAt).toBe("2024-04-01");
-        expect(result.data.category).toBe("engineering");
         expect(result.data.draft).toBe(true);
         expect(result.data.externalUrl).toBe("https://example.com/my-post");
       }
@@ -110,7 +91,6 @@ describe("PostFrontmatterSchema", () => {
         description: "Desc.",
         publishedAt: "2024-01-01",
         updatedAt: null,
-        category: null,
         externalUrl: null,
       };
 
@@ -124,7 +104,7 @@ describe("PostFrontmatterSchema", () => {
         title: "Post",
         description: "Desc.",
         publishedAt: "2024-01-01",
-        // updatedAt, category, externalUrl all absent
+        // updatedAt, externalUrl all absent
       };
 
       const result = PostFrontmatterSchema.safeParse(input);
@@ -334,7 +314,6 @@ describe("Post type structure", () => {
       publishedAt: "2024-01-01",
       updatedAt: null,
       tags: ["typescript"],
-      category: null,
       draft: false,
       externalUrl: null,
       content: "<p>Hello</p>",
@@ -353,7 +332,6 @@ describe("Post type structure", () => {
       publishedAt: "2024-06-01",
       updatedAt: null,
       tags: [],
-      category: null,
       draft: false,
       externalUrl: "https://dev.to/author/my-article",
       content: "",
@@ -373,7 +351,6 @@ describe("PostSummary type structure", () => {
       publishedAt: "2024-02-01",
       updatedAt: null,
       tags: ["nextjs"],
-      category: null,
       draft: false,
       externalUrl: null,
       readingTimeMinutes: 2,

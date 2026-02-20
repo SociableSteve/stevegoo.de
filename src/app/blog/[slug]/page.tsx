@@ -81,26 +81,34 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className={styles["articleContent"]}>
               {/* Article Header */}
               <header className={styles["articleHeader"]}>
-                {post.category && (
-                  <Badge variant="neutral" className={styles["categoryBadge"] ?? ""}>
-                    {post.category}
-                  </Badge>
-                )}
-
                 <h1 className={styles["articleTitle"]}>{post.title}</h1>
-
-                <p className={styles["articleDescription"]}>
-                  {post.description}
-                </p>
 
                 <PostMeta
                   publishedAt={post.publishedAt}
                   updatedAt={post.updatedAt}
                   readingTimeMinutes={post.readingTimeMinutes}
                   author={SITE_CONFIG.authorName}
-                  category={post.category ?? null}
                   className={styles["articleMeta"] ?? ""}
                 />
+
+                {/* Tags below metadata for better information hierarchy */}
+                {post.tags && post.tags.length > 0 && (
+                  <div className={styles["headerTags"]} aria-label="Post tags">
+                    {post.tags.map((tag, index) => (
+                      <Link
+                        key={`tag-${index}-${tag}`}
+                        href={`/blog?tag=${encodeURIComponent(tag)}`}
+                        className={styles["tagLink"]}
+                      >
+                        <Badge variant="neutral">
+                          {tag}
+                        </Badge>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                <hr className={styles["divider"]} aria-hidden="true" />
 
                 {isExternal && (
                   <div className={styles["externalNotice"]}>
@@ -128,19 +136,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
               {/* Article Footer */}
               <footer className={styles["articleFooter"]}>
-                {post.tags && post.tags.length > 0 && (
-                  <div className={styles["tags"]}>
-                    <h3 className={styles["tagsTitle"]}>Tags</h3>
-                    <div className={styles["tagsList"]}>
-                      {post.tags.map((tag, index) => (
-                        <Badge key={`tag-${index}-${tag}`} variant="default">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
                 <div className={styles["backToTop"]}>
                   <BackToTopButton className={styles["backToTopButton"] ?? ""} />
                 </div>
@@ -152,25 +147,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </article>
 
-      {/* Related Posts Section */}
-      <section className={styles["relatedPosts"]}>
+      {/* Navigation Section */}
+      <nav className={styles["postNavigation"]} aria-label="Post navigation">
         <div className={styles["container"]}>
-          <h2 className={styles["relatedTitle"]}>Continue Reading</h2>
-          <div className={styles["relatedLinks"]}>
-            <Link href="/blog" className={styles["relatedLink"]}>
+          <div className={styles["navigationLinks"]}>
+            <Link href="/blog" className={styles["navigationLink"]}>
               ← All Posts
             </Link>
-            {post.category && (
-              <Link
-                href={`/blog?category=${post.category}`}
-                className={styles["relatedLink"]}
-              >
-                More in {post.category} →
-              </Link>
-            )}
           </div>
         </div>
-      </section>
+      </nav>
     </main>
   );
 }

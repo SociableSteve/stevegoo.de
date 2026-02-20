@@ -11,8 +11,22 @@
 
 .hero {
   padding: var(--space-16) 0 var(--space-8);
-  background-color: var(--color-bg-primary);
+  background: linear-gradient(135deg,
+    var(--color-bg-primary) 0%,
+    var(--color-bg-secondary) 100%);
   border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  opacity: 0.3;
 }
 
 .container {
@@ -49,7 +63,7 @@
 
 .content {
   padding: var(--space-12) 0;
-  background-color: var(--color-bg-primary);
+  background-color: var(--color-bg-secondary);
 }
 
 /* ========== FILTER SECTION ========== */

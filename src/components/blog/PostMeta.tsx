@@ -2,7 +2,7 @@
  * PostMeta
  *
  * Renders structured metadata about a blog post: publish date, optional
- * update date, reading time, author, and category.
+ * update date, reading time, and author.
  *
  * Design decisions:
  * - Uses the semantic <time> element with machine-readable datetime attributes
@@ -15,12 +15,9 @@
  *   contexts where only a subset of metadata is available.
  * - Separator dots between items are aria-hidden so screen readers announce
  *   a clean prose list without reading "bullet bullet bullet".
- * - Category is wrapped in a <Badge> to visually reinforce its taxonomy role,
- *   matching the badge treatment in PostCard.
  */
 
 import React from "react";
-import { Badge } from "@/components/ui";
 import styles from "./PostMeta.module.css";
 
 /* ============================================================
@@ -36,8 +33,6 @@ export interface PostMetaProps {
   readingTimeMinutes?: number;
   /** Author display name. Omit on single-author sites where attribution is implicit. */
   author?: string;
-  /** Primary category name (plain string, not slug). */
-  category?: string | null;
   /** Additional CSS class names for layout overrides from the parent. */
   className?: string;
   /** Controls the visual density. Defaults to "default". */
@@ -90,7 +85,6 @@ export function PostMeta({
   updatedAt,
   readingTimeMinutes,
   author,
-  category,
   className,
   size = "default",
 }: PostMetaProps) {
@@ -107,16 +101,32 @@ export function PostMeta({
 
   const items: React.ReactNode[] = [];
 
-  // Category badge — first so it anchors the metadata row visually
-  if (category != null && category !== "") {
+  // Reading time (first)
+  if (readingTimeMinutes != null && readingTimeMinutes > 0) {
     items.push(
-      <Badge key="category" variant="default">
-        {category}
-      </Badge>,
+      <span key="reading-time" className={styles["readingTime"]}>
+        {/* aria-label provides a natural sentence for screen readers
+            rather than "3 min read" which loses the "approximately" sense */}
+        <abbr
+          title={`Approximately ${readingTimeMinutes} minute${readingTimeMinutes === 1 ? "" : "s"} to read`}
+          aria-label={`${readingTimeMinutes} min read`}
+        >
+          {readingTimeMinutes} min read
+        </abbr>
+      </span>,
     );
   }
 
-  // Published date
+  // Author (second)
+  if (author != null && author !== "") {
+    items.push(
+      <span key="author" className={styles["author"]}>
+        by {author}
+      </span>,
+    );
+  }
+
+  // Published date (third)
   items.push(
     <time
       key="published"
@@ -146,31 +156,6 @@ export function PostMeta({
         <span className={styles["dateLabel"]}>Updated </span>
         {formatDisplayDate(updatedAt)}
       </time>,
-    );
-  }
-
-  // Reading time
-  if (readingTimeMinutes != null && readingTimeMinutes > 0) {
-    items.push(
-      <span key="reading-time" className={styles["readingTime"]}>
-        {/* aria-label provides a natural sentence for screen readers
-            rather than "3 min read" which loses the "approximately" sense */}
-        <abbr
-          title={`Approximately ${readingTimeMinutes} minute${readingTimeMinutes === 1 ? "" : "s"} to read`}
-          aria-label={`${readingTimeMinutes} min read`}
-        >
-          {readingTimeMinutes} min read
-        </abbr>
-      </span>,
-    );
-  }
-
-  // Author
-  if (author != null && author !== "") {
-    items.push(
-      <span key="author" className={styles["author"]}>
-        by {author}
-      </span>,
     );
   }
 

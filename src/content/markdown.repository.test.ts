@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 import { performance } from "perf_hooks";
 import { MarkdownPostRepository } from "./markdown.repository";
-import { createPostSlug, createCategorySlug } from "./post.types";
+import { createPostSlug } from "./post.types";
 
 describe("MarkdownPostRepository", () => {
   let repository: MarkdownPostRepository;
@@ -41,8 +41,7 @@ describe("MarkdownPostRepository", () => {
       const post = await repository.findBySlug(slug);
 
       expect(post).not.toBeNull();
-      expect(post?.title).toBe("AI Won't Tell You When It's Wrong");
-      expect(post?.category).toBe(createCategorySlug("process"));
+      expect(post?.title).toBe("AI Won't Tell You When It's Wrong — Why Human-in-the-Loop Engineering Matters");
       expect(post?.draft).toBe(false);
     });
 
@@ -84,25 +83,6 @@ describe("MarkdownPostRepository", () => {
     });
   });
 
-  describe("findByCategory", () => {
-    it("filters by category and excludes drafts", async () => {
-      const category = createCategorySlug("engineering");
-      const result = await repository.findByCategory(category);
-
-      result.items.forEach(post => {
-        expect(post.category).toBe(category);
-        expect(post.draft).toBe(false);
-      });
-    });
-
-    it("returns empty result for non-existent category", async () => {
-      const category = createCategorySlug("non-existent");
-      const result = await repository.findByCategory(category);
-
-      expect(result.items).toHaveLength(0);
-      expect(result.total).toBe(0);
-    });
-  });
 
   describe("external posts", () => {
     it("handles external posts with externalUrl", async () => {
