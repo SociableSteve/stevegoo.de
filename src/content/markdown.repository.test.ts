@@ -386,7 +386,7 @@ describe("MarkdownPostRepository - Comprehensive Integration Tests", () => {
 
       const published = await emptyRepository.findPublished();
       expect(published.items).toHaveLength(0);
-      expect(published.pagination.totalItems).toBe(0);
+      expect(published.total).toBe(0);
     });
 
     it("handles empty directory gracefully", async () => {
@@ -508,7 +508,7 @@ describe("MarkdownPostRepository - Comprehensive Integration Tests", () => {
 
       // Check that nested lists are properly structured
       const nestedListMatch = content.match(/<[ou]l[^>]*>[\s\S]*?<li[^>]*>[\s\S]*?<[ou]l[^>]*>[\s\S]*?<\/[ou]l>[\s\S]*?<\/li>[\s\S]*?<\/[ou]l>/);
-      expect(nestedListMatch).toBeTruthy("nested lists should be properly structured");
+      expect(nestedListMatch, "nested lists should be properly structured").toBeTruthy();
     });
 
     it("preserves special characters without corruption", async () => {
