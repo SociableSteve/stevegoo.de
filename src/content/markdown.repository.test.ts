@@ -37,12 +37,12 @@ describe("MarkdownPostRepository", () => {
 
   describe("findBySlug", () => {
     it("finds a post by slug", async () => {
-      const slug = createPostSlug("typescript-generics");
+      const slug = createPostSlug("ai-wont-tell-you-when-its-wrong");
       const post = await repository.findBySlug(slug);
 
       expect(post).not.toBeNull();
-      expect(post?.title).toBe("Mastering TypeScript Generics");
-      expect(post?.category).toBe(createCategorySlug("engineering"));
+      expect(post?.title).toBe("AI Won't Tell You When It's Wrong");
+      expect(post?.category).toBe(createCategorySlug("process"));
       expect(post?.draft).toBe(false);
     });
 
@@ -117,7 +117,7 @@ describe("MarkdownPostRepository", () => {
 
   describe("markdown processing", () => {
     it("processes markdown content with syntax highlighting", async () => {
-      const slug = createPostSlug("typescript-generics");
+      const slug = createPostSlug("ai-wont-tell-you-when-its-wrong");
       const post = await repository.findBySlug(slug);
 
       expect(post).not.toBeNull();

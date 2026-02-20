@@ -91,10 +91,10 @@ describe("Header — rendering", () => {
     expect(logo).toHaveAttribute("href", "/");
   });
 
-  it("renders the Writing nav link", () => {
+  it("renders the Blog nav link", () => {
     renderHeader();
     expect(
-      screen.getByRole("link", { name: "Writing" }),
+      screen.getByRole("link", { name: "Blog" }),
     ).toBeInTheDocument();
   });
 
@@ -138,7 +138,7 @@ describe("Header — accessibility (axe-core)", () => {
   });
 
   it("has no axe violations on a content page", async () => {
-    mockUsePathname.mockReturnValue("/writing");
+    mockUsePathname.mockReturnValue("/blog");
     const { container } = renderHeader();
     const violations = await runAxe(container);
     expect(violations).toHaveLength(0);
@@ -258,18 +258,18 @@ describe("Header — active navigation state", () => {
     mockUsePathname.mockReturnValue("/");
     renderHeader();
 
-    const writingLink = screen.getByRole("link", { name: "Writing" });
+    const writingLink = screen.getByRole("link", { name: "Blog" });
     const aboutLink = screen.getByRole("link", { name: "About" });
 
     expect(writingLink).not.toHaveAttribute("aria-current");
     expect(aboutLink).not.toHaveAttribute("aria-current");
   });
 
-  it("marks Writing as current when on /writing", () => {
-    mockUsePathname.mockReturnValue("/writing");
+  it("marks Blog as current when on /blog", () => {
+    mockUsePathname.mockReturnValue("/blog");
     renderHeader();
 
-    expect(screen.getByRole("link", { name: "Writing" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Blog" })).toHaveAttribute(
       "aria-current",
       "page",
     );
@@ -278,11 +278,11 @@ describe("Header — active navigation state", () => {
     );
   });
 
-  it("marks Writing as current for nested post routes", () => {
-    mockUsePathname.mockReturnValue("/writing/my-post-slug");
+  it("marks Blog as current for nested post routes", () => {
+    mockUsePathname.mockReturnValue("/blog/my-post-slug");
     renderHeader();
 
-    expect(screen.getByRole("link", { name: "Writing" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Blog" })).toHaveAttribute(
       "aria-current",
       "page",
     );
@@ -296,13 +296,13 @@ describe("Header — active navigation state", () => {
       "aria-current",
       "page",
     );
-    expect(screen.getByRole("link", { name: "Writing" })).not.toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Blog" })).not.toHaveAttribute(
       "aria-current",
     );
   });
 
   it("only marks one link as current at a time", () => {
-    mockUsePathname.mockReturnValue("/writing");
+    mockUsePathname.mockReturnValue("/blog");
     renderHeader();
 
     const currentLinks = screen
@@ -326,11 +326,11 @@ describe("Header — keyboard navigation", () => {
     await user.tab();
 
     // The exact tab order depends on DOM position:
-    // logo → Writing → About → theme toggle
+    // logo → Blog → About → theme toggle
     // We verify all are reachable by checking focus lands on them.
     const focusable = [
       screen.getByRole("link", { name: /home/i }),
-      screen.getByRole("link", { name: "Writing" }),
+      screen.getByRole("link", { name: "Blog" }),
       screen.getByRole("link", { name: "About" }),
       screen.getByRole("button", { name: /switch to/i }),
     ];
