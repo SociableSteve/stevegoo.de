@@ -25,10 +25,11 @@ export default defineConfig({
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
     },
-    {
+    // Skip WebKit in CI due to missing system libraries, keep for local testing
+    ...(process.env["CI"] ? [] : [{
       name: "webkit",
       use: { ...devices["Desktop Safari"] },
-    },
+    }]),
   ],
   webServer: {
     // In CI the static export artefact is downloaded and extracted before this
