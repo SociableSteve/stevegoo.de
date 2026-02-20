@@ -9,7 +9,7 @@ import { test, expect } from "@playwright/test";
 test.describe("Home page", () => {
   test("loads successfully and has correct title", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/personal brand/i);
+    await expect(page).toHaveTitle(/Steve Goode - Head of Engineering/i);
   });
 
   test("renders the main heading", async ({ page }) => {
@@ -22,8 +22,8 @@ test.describe("Home page", () => {
     page,
   }) => {
     await page.goto("/");
-    // Verify navigation landmark is present
-    const nav = page.getByRole("navigation");
+    // Verify main navigation landmark is present
+    const nav = page.getByRole("navigation", { name: "Main" });
     await expect(nav).toBeVisible();
   });
 });
