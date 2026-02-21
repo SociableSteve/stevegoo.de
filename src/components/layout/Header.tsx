@@ -35,7 +35,7 @@
  *     `currentColor` inheritance, keeping icon colour in sync with the button.
  */
 
-import React, { useId, useState, useEffect } from "react";
+import React, { useId, useState, useEffect, useLayoutEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "@/components/providers/ThemeProvider";
@@ -122,9 +122,10 @@ export default function Header() {
   const liveRegionId = useId();
 
   // Set mounted to true after initial render to enable theme-dependent content
-  useEffect(() => {
-    const timeoutId = setTimeout(() => setMounted(true), 0);
-    return () => clearTimeout(timeoutId);
+  useLayoutEffect(() => {
+    // This is the standard Next.js pattern for preventing hydration mismatches
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
   }, []);
 
   // After toggling, describe the NEW state (what was just applied).
