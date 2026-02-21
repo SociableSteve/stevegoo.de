@@ -173,7 +173,7 @@ export default function Header() {
       <div className={styles["container"]}>
         {/* ── Logo / Site name ───────────────────────────── */}
         <Link href="/" className={styles["homeLink"]} aria-label={`${SITE_CONFIG.siteName} — home`}>
-          {SITE_CONFIG.siteName}
+          <span>{SITE_CONFIG.siteName}</span>
         </Link>
 
         {/* ── Primary navigation ─────────────────────────── */}
