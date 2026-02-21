@@ -123,8 +123,8 @@ export default function Header() {
 
   // Set mounted to true after initial render to enable theme-dependent content
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- Standard pattern for preventing hydration mismatch
-    setMounted(true);
+    const timeoutId = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   // After toggling, describe the NEW state (what was just applied).
