@@ -11,7 +11,7 @@
 
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { vi } from "vitest";
+import { vi, type MockedFunction } from "vitest";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { BlogPostsClient } from "./BlogPostsClient";
 import { buildPost, createPostSlug } from "@/test/helpers/post.builders";
@@ -23,9 +23,9 @@ vi.mock("next/navigation", () => ({
   usePathname: vi.fn(),
 }));
 
-const mockUseSearchParams = useSearchParams as vi.MockedFunction<typeof useSearchParams>;
-const mockUseRouter = useRouter as vi.MockedFunction<typeof useRouter>;
-const mockUsePathname = usePathname as vi.MockedFunction<typeof usePathname>;
+const mockUseSearchParams = useSearchParams as MockedFunction<typeof useSearchParams>;
+const mockUseRouter = useRouter as MockedFunction<typeof useRouter>;
+const mockUsePathname = usePathname as MockedFunction<typeof usePathname>;
 
 describe("BlogPostsClient", () => {
   const mockPush = vi.fn();
@@ -52,7 +52,14 @@ describe("BlogPostsClient", () => {
   ];
 
   beforeEach(() => {
-    mockUseRouter.mockReturnValue({ push: mockPush } as ReturnType<typeof useRouter>);
+    mockUseRouter.mockReturnValue({
+      push: mockPush,
+      back: vi.fn(),
+      forward: vi.fn(),
+      refresh: vi.fn(),
+      replace: vi.fn(),
+      prefetch: vi.fn(),
+    } as ReturnType<typeof useRouter>);
     mockUsePathname.mockReturnValue("/blog");
     mockPush.mockClear();
   });
@@ -146,7 +153,7 @@ describe("BlogPostsClient", () => {
 
       render(<BlogPostsClient posts={samplePosts} />);
 
-      const clearButton = screen.getAllByRole("button", { name: "Show All Posts" })[0];
+      const clearButton = screen.getAllByRole("button", { name: "Show All Posts" })[0]!;
       fireEvent.click(clearButton);
 
       expect(mockPush).toHaveBeenCalledWith("/blog");
@@ -159,7 +166,7 @@ describe("BlogPostsClient", () => {
       render(<BlogPostsClient posts={samplePosts} />);
 
       const clearButtons = screen.getAllByRole("button", { name: "Show All Posts" });
-      fireEvent.click(clearButtons[0]);
+      fireEvent.click(clearButtons[0]!);
 
       expect(mockPush).toHaveBeenCalledWith("/blog");
     });
@@ -167,7 +174,7 @@ describe("BlogPostsClient", () => {
 
   describe("post counts", () => {
     it("shows correct singular/plural post counts", () => {
-      const singlePost = [samplePosts[0]];
+      const singlePost = [samplePosts[0]!];
       const mockSearchParams = new URLSearchParams();
       mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 

@@ -132,7 +132,6 @@ describe("PostMeta — accessibility (axe-core)", () => {
         updatedAt="2024-04-01"
         readingTimeMinutes={8}
         author="Jane Smith"
-        category="engineering"
       />,
     );
     expect(await runAxe(container)).toHaveLength(0);
