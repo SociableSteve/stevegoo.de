@@ -5,7 +5,7 @@
  *
  * Sticky site header with:
  *   - Logo / home link (site name from SITE_CONFIG)
- *   - Primary navigation links (Writing, About)
+ *   - Primary navigation links (Blog, About)
  *   - Theme toggle button integrated with ThemeProvider
  *
  * Accessibility decisions:
@@ -173,7 +173,7 @@ export default function Header() {
       <div className={styles["container"]}>
         {/* ── Logo / Site name ───────────────────────────── */}
         <Link href="/" className={styles["homeLink"]} aria-label={`${SITE_CONFIG.siteName} — home`}>
-          {SITE_CONFIG.siteName}
+          <span>{SITE_CONFIG.siteName}</span>
         </Link>
 
         {/* ── Primary navigation ─────────────────────────── */}

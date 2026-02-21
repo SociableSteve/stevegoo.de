@@ -87,50 +87,6 @@
   100% { opacity: 1; transform: translateY(0); }
 }
 
-.roleTag {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  background: var(--color-accent-subtle);
-  border: 1px solid var(--color-accent-subtle-border);
-  border-radius: var(--radius-md);
-  font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide);
-  margin-bottom: var(--space-12);
-  position: relative;
-  overflow: hidden;
-  opacity: 0;
-  animation: roleTagReveal 0.25s ease-out 0.08s forwards;
-}
-
-.roleTag::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg,
-    transparent,
-    color-mix(in srgb, var(--color-accent) 30%, transparent),
-    transparent);
-  animation: shimmer 1.5s ease-in-out 0.8s infinite;
-}
-
-@keyframes roleTagReveal {
-  0% { opacity: 0; transform: translateY(12px) scale(0.97); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(200%); }
-}
 
 .heroTitle {
   font-family: var(--font-serif);
@@ -418,7 +374,13 @@
 
 .focusGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  /*
+   * min(350px, 100%) clamps the column minimum to the available container
+   * width so the grid never forces horizontal overflow on narrow viewports.
+   * At desktop widths the 350px minimum still drives the auto-fit layout.
+   * The @media (max-width: 768px) block below overrides to a single column.
+   */
+  grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
   gap: var(--space-10);
 }
 
@@ -614,9 +576,14 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .heroContent {
     gap: var(--space-10);
+  }
+
+  /* Hide decorative grid visual on mobile - it's just wasted space */
+  .heroVisual {
+    display: none;
   }
 
   .experienceGrid,

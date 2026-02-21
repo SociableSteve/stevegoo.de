@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { MarkdownPostRepository } from "@/content/markdown.repository";
 import { PostCard } from "@/components/blog/PostCard";
-import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { MentorIcon, GrowthIcon, TargetIcon } from "@/components/icons";
 import styles from "./page.module.css";
@@ -29,9 +28,6 @@ export default async function HomePage() {
         <div className={styles["container"]}>
           <div className={styles["heroContent"]}>
             <div className={styles["heroText"]}>
-              <Badge variant="neutral" className={styles["roleTag"] ?? ""}>
-                Head of Engineering
-              </Badge>
               <h1 id="hero-heading" className={styles["heroTitle"]}>
                 Building high-performing teams and technical excellence
               </h1>

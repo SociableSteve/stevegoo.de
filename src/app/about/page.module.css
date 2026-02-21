@@ -409,11 +409,11 @@
   }
 
   .heroTitle {
-    font-size: var(--text-3xl);
+    font-size: var(--font-size-3xl);
   }
 
   .sectionTitle {
-    font-size: var(--text-xl);
+    font-size: var(--font-size-xl);
     margin-bottom: var(--space-8);
   }
 
@@ -448,16 +448,16 @@
 
 @media (max-width: 480px) {
   .heroTitle {
-    font-size: var(--text-2xl);
+    font-size: var(--font-size-2xl);
   }
 
   .heroDescription {
-    font-size: var(--text-base);
+    font-size: var(--font-size-base);
   }
 
   .contactButton {
     padding: var(--space-3) var(--space-6);
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
   }
 }
 

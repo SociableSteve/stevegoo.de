@@ -38,8 +38,8 @@
 }
 
 .breadcrumbLink {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
   text-decoration: none;
   transition: var(--transition-fast);
@@ -50,7 +50,7 @@
 }
 
 .breadcrumbLink:focus-visible {
-  outline: 2px solid var(--color-border-focus);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
@@ -79,9 +79,9 @@
 }
 
 .articleTitle {
-  font-weight: var(--font-bold);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text-primary);
   margin: 0 0 var(--space-6);
   text-wrap: balance;
@@ -109,7 +109,7 @@
 }
 
 .tagLink:focus-visible {
-  outline: 2px solid var(--color-border-focus);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
@@ -140,14 +140,14 @@
 .externalNotice p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: var(--text-sm);
-  line-height: var(--leading-relaxed);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
 }
 
 .externalLink {
   color: var(--color-accent);
   text-decoration: none;
-  font-weight: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   transition: var(--transition-fast);
 }
 
@@ -157,7 +157,7 @@
 }
 
 .externalLink:focus-visible {
-  outline: 2px solid var(--color-border-focus);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
@@ -181,8 +181,8 @@
 }
 
 .backToTopButton {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
   background-color: var(--color-bg-primary);
   border: 1px solid var(--color-border);
@@ -199,7 +199,7 @@
 }
 
 .backToTopButton:focus-visible {
-  outline: 2px solid var(--color-border-focus);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
@@ -219,8 +219,8 @@
 }
 
 .navigationLink {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
   text-decoration: none;
   padding: var(--space-3) var(--space-6);
@@ -237,7 +237,7 @@
 }
 
 .navigationLink:focus-visible {
-  outline: 2px solid var(--color-border-focus);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
@@ -264,7 +264,7 @@
   }
 
   .articleTitle {
-    font-size: var(--text-2xl);
+    font-size: var(--font-size-2xl);
   }
 
   .articleHeader {
