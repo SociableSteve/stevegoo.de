@@ -7,8 +7,8 @@ import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import rehypePrettyCode from "rehype-pretty-code";
 import type { PostRepository, PaginatedResult, PaginationParams } from "./post.repository";
-import type { Post, PostSummary, CategorySlug } from "./post.types";
-import { PostFrontmatterSchema, createPostSlug, createCategorySlug } from "./post.types";
+import type { Post, PostSummary } from "./post.types";
+import { PostFrontmatterSchema, createPostSlug } from "./post.types";
 import { calculateReadingTime } from "@/lib/content/reading-time";
 import { FrontmatterError } from "@/lib/frontmatter-error";
 import { markdownImageHandler } from "@/lib/markdown-image-handler";
@@ -38,16 +38,6 @@ export class MarkdownPostRepository implements PostRepository {
     return this.paginate(published.map(this.toPostSummary), params);
   }
 
-  async findByCategory(
-    category: CategorySlug,
-    params?: PaginationParams
-  ): Promise<PaginatedResult<PostSummary>> {
-    const categoryPosts = (await this.getAllPosts())
-      .filter(post => !post.draft && post.category === category)
-      .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
-
-    return this.paginate(categoryPosts.map(this.toPostSummary), params);
-  }
 
   private async getAllPosts(): Promise<Post[]> {
     if (!fs.existsSync(this.postsDir)) {
@@ -103,7 +93,6 @@ export class MarkdownPostRepository implements PostRepository {
       content: processedContent,
       publishedAt: data.publishedAt,
       updatedAt: data.updatedAt ?? null,
-      category: data.category ? createCategorySlug(data.category) : null,
       tags: data.tags ?? [],
       draft: data.draft ?? false,
       externalUrl: data.externalUrl ?? null,

@@ -8,7 +8,7 @@
  *   default, removing the repetition of specifying every required field in
  *   each individual test.
  * - `buildPostSummary` mirrors buildPost but omits `content`, matching the
- *   PostSummary projection returned by findPublished / findByCategory.
+ *   PostSummary projection returned by findPublished.
  * - Defaults are deliberately generic ("test-post", "2024-01-01") so that
  *   tests that only care about one field are not confused by fixture-flavoured
  *   data bleeding in from another concern.
@@ -21,11 +21,9 @@
 
 import {
   createPostSlug,
-  createCategorySlug,
   type Post,
   type PostSummary,
   type PostSlug,
-  type CategorySlug,
 } from "@/content/post.types";
 
 // ---------------------------------------------------------------------------
@@ -39,7 +37,6 @@ const DEFAULT_POST: Post = {
   publishedAt: "2024-01-01",
   updatedAt: null,
   tags: [],
-  category: null,
   draft: false,
   externalUrl: null,
   content: "<p>Default test content.</p>",
@@ -55,8 +52,8 @@ const DEFAULT_POST: Post = {
  * the default base object.
  *
  * @example
- * // Published engineering post with specific slug
- * const post = buildPost({ slug: createPostSlug("my-post"), category: "engineering" });
+ * // Published post with specific slug
+ * const post = buildPost({ slug: createPostSlug("my-post"), draft: false });
  *
  * @example
  * // Draft post
@@ -87,17 +84,17 @@ export function buildPostSummary(
  * date (one day per post) so the first element is the newest.
  *
  * Callers may supply a shared `overrides` object to set a common field across
- * all generated posts (e.g. `{ category: "engineering", draft: false }`).
+ * all generated posts (e.g. `{ draft: false, tags: ["test"] }`).
  *
  * @param count - Number of posts to generate.
  * @param baseDate - ISO date string (YYYY-MM-DD) for the first (newest) post.
  * @param overrides - Optional shared field overrides applied to each post.
  *
  * @example
- * // Ten published engineering posts for a pagination test
+ * // Ten published posts for a pagination test
  * const posts = buildPosts(10, "2024-06-01", {
- *   category: "engineering",
  *   draft: false,
+ *   tags: ["test"],
  * });
  */
 export function buildPosts(
@@ -126,11 +123,11 @@ export function buildPosts(
 }
 
 // ---------------------------------------------------------------------------
-// Slug / category helpers — keep branded-type construction out of test files
+// Slug helpers — keep branded-type construction out of test files
 // ---------------------------------------------------------------------------
 
 /**
  * Convenience wrapper so test files import one module instead of two.
  */
-export { createPostSlug, createCategorySlug };
-export type { PostSlug, CategorySlug };
+export { createPostSlug };
+export type { PostSlug };

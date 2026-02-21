@@ -2,7 +2,7 @@
  * PostMeta component tests
  *
  * Coverage areas:
- *  1. Rendering — dates, reading time, author, category
+ *  1. Rendering — dates, reading time, author
  *  2. Date formatting — display text, datetime attributes
  *  3. Updated date — only shown when different from publishedAt
  *  4. Accessibility — axe-core, semantic time elements, ARIA
@@ -52,17 +52,6 @@ describe("PostMeta — rendering", () => {
     expect(screen.queryByText(/by /)).not.toBeInTheDocument();
   });
 
-  it("renders category badge when provided", () => {
-    render(<PostMeta publishedAt="2024-03-15" category="engineering" />);
-    expect(screen.getByText("engineering")).toBeInTheDocument();
-  });
-
-  it("does not render category badge when null", () => {
-    render(<PostMeta publishedAt="2024-03-15" category={null} />);
-    // We check that no badge-like element with a category appears
-    // The component renders no extra badge text
-    expect(screen.queryByText("engineering")).not.toBeInTheDocument();
-  });
 
   it("merges custom className onto the container", () => {
     const { container } = render(

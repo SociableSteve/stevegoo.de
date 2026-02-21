@@ -2,8 +2,7 @@
 title: "Mastering TypeScript Generics"
 description: "A comprehensive guide to understanding and using TypeScript generics effectively in your codebase. Learn advanced patterns and best practices."
 publishedAt: "2024-01-15"
-category: "engineering"
-tags: ["TypeScript", "Generics", "Programming"]
+tags: ["TypeScript", "Generics", "Programming", "engineering"]
 draft: true
 ---
 

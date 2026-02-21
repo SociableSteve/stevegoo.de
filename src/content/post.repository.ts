@@ -1,4 +1,4 @@
-import type { Post, PostSummary, PostSlug, CategorySlug } from "./post.types";
+import type { Post, PostSummary, PostSlug } from "./post.types";
 
 // ---------------------------------------------------------------------------
 // Pagination support types
@@ -72,20 +72,6 @@ export interface PostRepository {
    */
   findBySlug(slug: PostSlug): Promise<Post | null>;
 
-  /**
-   * Returns a paginated page of published posts within a category.
-   *
-   * Only posts where `draft === false` are included.  Posts without a
-   * `category` are excluded even if `category` is passed as null.
-   *
-   * @param category - The CategorySlug to filter by.
-   * @param pagination - Page and perPage parameters.
-   * @returns A paginated result containing PostSummary projections.
-   */
-  findByCategory(
-    category: CategorySlug,
-    pagination: PaginationParams,
-  ): Promise<PaginatedResult<PostSummary>>;
 
   /**
    * Returns a paginated page of published posts across all categories.

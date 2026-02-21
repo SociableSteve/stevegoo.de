@@ -48,8 +48,7 @@ export const POST_TYPESCRIPT_GENERICS: Post = {
     "A deep dive into generic types, constraints, and advanced patterns for building reusable, type-safe TypeScript code.",
   publishedAt: "2024-03-15",
   updatedAt: "2024-04-01",
-  tags: ["typescript", "generics", "type-safety"],
-  category: "engineering",
+  tags: ["typescript", "generics", "type-safety", "engineering"],
   draft: false,
   externalUrl: null,
   content:
@@ -64,8 +63,7 @@ export const POST_CLEAN_ARCHITECTURE: Post = {
     "How to apply the Dependency Inversion Principle and port/adapter pattern to structure scalable Next.js projects.",
   publishedAt: "2024-02-20",
   updatedAt: null,
-  tags: ["nextjs", "architecture", "solid"],
-  category: "engineering",
+  tags: ["nextjs", "architecture", "solid", "engineering"],
   draft: false,
   externalUrl: null,
   content:
@@ -80,8 +78,7 @@ export const POST_REACT_TESTING: Post = {
     "Use-case driven testing with Testing Library: how to write tests that survive refactoring and document real behaviour.",
   publishedAt: "2024-01-10",
   updatedAt: null,
-  tags: ["react", "testing", "vitest"],
-  category: "engineering",
+  tags: ["react", "testing", "vitest", "engineering"],
   draft: false,
   externalUrl: null,
   content:
@@ -101,7 +98,6 @@ export const POST_DEVELOPER_PORTFOLIO: Post = {
   publishedAt: "2024-05-01",
   updatedAt: null,
   tags: ["career", "portfolio", "jobs"],
-  category: "career",
   draft: false,
   externalUrl: null,
   content:
@@ -116,8 +112,7 @@ export const POST_CODE_REVIEW: Post = {
     "How to give feedback that improves the codebase without derailing team dynamics.",
   publishedAt: "2024-04-12",
   updatedAt: null,
-  tags: ["code-review", "teamwork", "engineering"],
-  category: "career",
+  tags: ["code-review", "teamwork", "engineering", "career"],
   draft: false,
   externalUrl: null,
   content:
@@ -136,8 +131,7 @@ export const POST_DRAFT_WIP: Post = {
     "Work in progress — exploring TypeScript compiler API to build custom transformations.",
   publishedAt: "2024-06-01",
   updatedAt: null,
-  tags: ["typescript", "compiler"],
-  category: "engineering",
+  tags: ["typescript", "compiler", "engineering"],
   draft: true,
   externalUrl: null,
   content: "<h1>Draft Post</h1><p>This is a work in progress...</p>",
@@ -151,7 +145,6 @@ export const POST_DRAFT_NO_CATEGORY: Post = {
   publishedAt: "2024-07-15",
   updatedAt: null,
   tags: [],
-  category: null,
   draft: true,
   externalUrl: null,
   content: "<p>Notes...</p>",
@@ -169,8 +162,7 @@ export const POST_EXTERNAL_DEVTO: Post = {
     "Originally published on Dev.to — a step-by-step guide to ARIA-compliant form patterns.",
   publishedAt: "2023-11-20",
   updatedAt: null,
-  tags: ["react", "accessibility", "forms"],
-  category: "engineering",
+  tags: ["react", "accessibility", "forms", "engineering"],
   draft: false,
   externalUrl: "https://dev.to/author/building-accessible-forms",
   content: "",
@@ -185,7 +177,6 @@ export const POST_EXTERNAL_MEDIUM: Post = {
   publishedAt: "2023-09-05",
   updatedAt: null,
   tags: ["career", "reflections"],
-  category: "career",
   draft: false,
   externalUrl: "https://medium.com/@author/ten-lessons",
   content: "",
@@ -207,7 +198,6 @@ export const POST_NO_CATEGORY: Post = {
   publishedAt: "2023-01-01",
   updatedAt: undefined,
   tags: [],
-  category: null,
   draft: false,
   externalUrl: null,
   content: "<h1>Hello, World</h1><p>Welcome to my blog.</p>",
@@ -224,8 +214,7 @@ export const POST_MINIMAL_FIELDS: Post = {
   description: "This post has no optional metadata beyond the bare minimum.",
   publishedAt: "2023-03-10",
   updatedAt: null,
-  tags: [],
-  category: "engineering",
+  tags: ["engineering"],
   draft: false,
   externalUrl: null,
   content: "<p>Minimal content.</p>",
@@ -264,17 +253,17 @@ export const PUBLISHED_POSTS: readonly Post[] = ALL_POSTS.filter(
 );
 
 /**
- * Published posts in the "engineering" category, newest-first.
+ * Published posts tagged with "engineering", newest-first.
  */
 export const ENGINEERING_POSTS: readonly Post[] = PUBLISHED_POSTS.filter(
-  (p) => p.category === "engineering",
+  (p) => p.tags.includes("engineering"),
 );
 
 /**
- * Published posts in the "career" category, newest-first.
+ * Published posts tagged with "career", newest-first.
  */
 export const CAREER_POSTS: readonly Post[] = PUBLISHED_POSTS.filter(
-  (p) => p.category === "career",
+  (p) => p.tags.includes("career"),
 );
 
 // ---------------------------------------------------------------------------

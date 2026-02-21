@@ -1,14 +1,10 @@
 ---
-title: "AI Won't Tell You When It's Wrong"
+title: "AI Won't Tell You When It's Wrong — Why Human-in-the-Loop Engineering Matters"
 description: "As we move in to a work where AI development is becoming the normal process we need to be vigilant on the output it produces. AI won't tell us when it's not right and keeping the human-in-the-loop is essential."
 publishedAt: "2026-02-20"
-category: "process"
 tags: ["Engineering", "AI", "Process"]
 draft: false
 ---
-
-# AI Won't Tell You When It's Wrong — Why Human-in-the-Loop Engineering Matters
-
 You've got a project with an impending deadline. Everyone on your team is already focused elsewhere, and there's no one available to pick it up. Even if you could pull someone in, there's not enough time to properly onboard them to the domain and the problem. So you do something you weren't entirely sure you believed in: you turn to AI.
 
 That was me, not long ago. I was naive about what AI-native engineering could actually deliver in practice. Not in demos, not in Twitter threads, but in the messy reality of shipping production software under pressure. But the business need was real, and I saw it as an opportunity to learn first-hand where things were heading. So I went all in. I used Claude Code across the entire development lifecycle: defining and refining GitHub issues, planning implementation, writing code, and handling PR feedback.

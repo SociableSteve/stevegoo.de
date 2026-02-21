@@ -19,8 +19,6 @@ type Brand<T, B> = T & { readonly [_brand]: B };
 /** A URL-safe slug string that uniquely identifies a Post. */
 export type PostSlug = Brand<string, "PostSlug">;
 
-/** A URL-safe slug string that uniquely identifies a Category. */
-export type CategorySlug = Brand<string, "CategorySlug">;
 
 /**
  * Constructs a PostSlug from a raw string.
@@ -33,12 +31,6 @@ export function createPostSlug(raw: string): PostSlug {
   return raw as PostSlug;
 }
 
-/**
- * Constructs a CategorySlug from a raw string.
- */
-export function createCategorySlug(raw: string): CategorySlug {
-  return raw as CategorySlug;
-}
 
 // ---------------------------------------------------------------------------
 // Zod schema — PostFrontmatter
@@ -81,11 +73,6 @@ export const PostFrontmatterSchema = z.object({
   /** Taxonomy tags for filtering and discovery. Defaults to empty array. */
   tags: z.array(z.string()).default([]),
 
-  /**
-   * Primary category for hierarchical navigation.
-   * Null/omitted indicates the post is uncategorised.
-   */
-  category: z.string().nullish(),
 
   /**
    * When true, the post is excluded from published listings.
@@ -123,7 +110,6 @@ export interface Post {
   readonly publishedAt: string;
   readonly updatedAt: string | null | undefined;
   readonly tags: string[];
-  readonly category: string | null | undefined;
   readonly draft: boolean;
   readonly externalUrl: string | null | undefined;
 
