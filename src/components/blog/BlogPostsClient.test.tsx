@@ -168,7 +168,9 @@ describe("BlogPostsClient", () => {
       const clearButtons = screen.getAllByRole("button", { name: "Show All Posts" });
       // Click the empty state clear button (second button)
       expect(clearButtons).toHaveLength(2);
-      fireEvent.click(clearButtons[1]);
+      const emptyStateClearButton = clearButtons[1];
+      if (!emptyStateClearButton) throw new Error("Empty state clear button not found");
+      fireEvent.click(emptyStateClearButton);
 
       expect(mockPush).toHaveBeenCalledWith("/blog");
     });
