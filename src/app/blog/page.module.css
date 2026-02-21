@@ -42,18 +42,18 @@
 }
 
 .heroTitle {
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-text-primary);
   margin: 0 0 var(--space-4);
   text-wrap: balance;
 }
 
 .heroDescription {
-  font-size: var(--text-lg);
-  line-height: var(--leading-normal);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-normal);
   color: var(--color-text-secondary);
   margin: 0;
   text-wrap: balance;
@@ -95,7 +95,7 @@
 }
 
 .paginationInfo {
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   text-align: center;
 }
@@ -114,8 +114,8 @@
   color: var(--color-text-primary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   text-decoration: none;
   transition: var(--transition-fast);
   min-height: 40px;
@@ -128,7 +128,7 @@
 }
 
 .paginationLink:focus {
-  outline: 2px solid var(--color-border-focus);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
@@ -144,15 +144,15 @@
 }
 
 .emptyState h2 {
-  font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   margin: 0 0 var(--space-4);
 }
 
 .emptyState p {
-  font-size: var(--text-base);
-  line-height: var(--leading-normal);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
   color: var(--color-text-secondary);
   margin: 0 0 var(--space-6);
   text-wrap: balance;
@@ -167,8 +167,8 @@
   color: white;
   border: 1px solid var(--color-accent);
   border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   text-decoration: none;
   transition: var(--transition-fast);
   min-height: 36px;
@@ -180,7 +180,7 @@
 }
 
 .resetFilter:focus {
-  outline: 2px solid var(--color-border-focus);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
@@ -200,11 +200,11 @@
   }
 
   .heroTitle {
-    font-size: var(--text-2xl);
+    font-size: var(--font-size-2xl);
   }
 
   .heroDescription {
-    font-size: var(--text-base);
+    font-size: var(--font-size-base);
   }
 
   .postsGrid {
@@ -237,7 +237,7 @@
 
 @media (max-width: 480px) {
   .heroTitle {
-    font-size: var(--text-xl);
+    font-size: var(--font-size-xl);
   }
 
   .filterSection {
@@ -249,11 +249,11 @@
   }
 
   .emptyState h2 {
-    font-size: var(--text-lg);
+    font-size: var(--font-size-lg);
   }
 
   .emptyState p {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
   }
 }
 
