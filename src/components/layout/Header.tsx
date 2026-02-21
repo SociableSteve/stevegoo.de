@@ -5,7 +5,7 @@
  *
  * Sticky site header with:
  *   - Logo / home link (site name from SITE_CONFIG)
- *   - Primary navigation links (Writing, About)
+ *   - Primary navigation links (Blog, About)
  *   - Theme toggle button integrated with ThemeProvider
  *
  * Accessibility decisions:
@@ -145,7 +145,7 @@ export default function Header() {
   // The aria-label describes what will happen when clicked (the action),
   // not the current state — this is the pattern most assistive technologies
   // work best with for icon-only toggle controls.
-  const toggleLabel = isDark ? "Switch to light mode" : "Switch to dark mode";
+  const toggleLabel = theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
 
   function handleThemeToggle() {
     toggleTheme();
