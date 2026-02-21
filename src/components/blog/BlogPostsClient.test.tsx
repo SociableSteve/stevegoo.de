@@ -153,7 +153,7 @@ describe("BlogPostsClient", () => {
 
       render(<BlogPostsClient posts={samplePosts} />);
 
-      const clearButton = screen.getAllByRole("button", { name: "Show All Posts" })[0]!;
+      const clearButton = screen.getByRole("button", { name: "Show All Posts" });
       fireEvent.click(clearButton);
 
       expect(mockPush).toHaveBeenCalledWith("/blog");
@@ -166,7 +166,9 @@ describe("BlogPostsClient", () => {
       render(<BlogPostsClient posts={samplePosts} />);
 
       const clearButtons = screen.getAllByRole("button", { name: "Show All Posts" });
-      fireEvent.click(clearButtons[0]!);
+      // Click the empty state clear button (second button)
+      expect(clearButtons).toHaveLength(2);
+      fireEvent.click(clearButtons[1]);
 
       expect(mockPush).toHaveBeenCalledWith("/blog");
     });
@@ -174,7 +176,7 @@ describe("BlogPostsClient", () => {
 
   describe("post counts", () => {
     it("shows correct singular/plural post counts", () => {
-      const singlePost = [samplePosts[0]!];
+      const singlePost = samplePosts.slice(0, 1);
       const mockSearchParams = new URLSearchParams();
       mockUseSearchParams.mockReturnValue(mockSearchParams as ReturnType<typeof useSearchParams>);
 
