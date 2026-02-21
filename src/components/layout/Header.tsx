@@ -111,11 +111,21 @@ export default function Header() {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
 
+  // Track whether component has mounted to prevent hydration mismatch
+  // During SSR and first client render, we use light theme as placeholder
+  const [mounted, setMounted] = useState(false);
+
   // Announcement text for the screen-reader live region.
   // We start empty and only populate it after a user-initiated toggle
   // so there is no announcement on initial render.
   const [announcement, setAnnouncement] = useState("");
   const liveRegionId = useId();
+
+  // Set mounted to true after initial render to enable theme-dependent content
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Standard pattern for preventing hydration mismatch
+    setMounted(true);
+  }, []);
 
   // After toggling, describe the NEW state (what was just applied).
   // We derive from the current `theme` value which has already been updated.
@@ -127,7 +137,9 @@ export default function Header() {
     }
   }, [announcement]);
 
-  const isDark = theme === "dark";
+  // Use theme only after mount to prevent hydration mismatch
+  // Before mount, always use light theme (matches SSR output)
+  const isDark = mounted && theme === "dark";
 
   // The aria-label describes what will happen when clicked (the action),
   // not the current state — this is the pattern most assistive technologies
@@ -137,7 +149,9 @@ export default function Header() {
   function handleThemeToggle() {
     toggleTheme();
     // Announce the resulting theme (after toggle, theme will flip)
-    const next = isDark ? "light" : "dark";
+    // Use actual theme value for announcement, not the mounted-dependent isDark
+    const actualIsDark = theme === "dark";
+    const next = actualIsDark ? "light" : "dark";
     setAnnouncement(`Switched to ${next} mode`);
   }
 
