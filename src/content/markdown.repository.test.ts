@@ -37,11 +37,11 @@ describe("MarkdownPostRepository", () => {
 
   describe("findBySlug", () => {
     it("finds a post by slug", async () => {
-      const slug = createPostSlug("ai-wont-tell-you-when-its-wrong");
+      const slug = createPostSlug("what-i-learned-using-ai");
       const post = await repository.findBySlug(slug);
 
       expect(post).not.toBeNull();
-      expect(post?.title).toBe("AI Won't Tell You When It's Wrong — Why Human-in-the-Loop Engineering Matters");
+      expect(post?.title).toBe("What I learned using AI - Why the human-in-the-loop matters");
       expect(post?.draft).toBe(false);
     });
 
@@ -463,7 +463,7 @@ describe("MarkdownPostRepository - Comprehensive Integration Tests", () => {
         // Tables require remark-gfm plugin - currently rendered as plain text
         { name: "table text", pattern: /\| Feature \| Support \| Performance \| Notes \|/ },
         { name: "blockquotes", pattern: /<blockquote[^>]*>[\s\S]*?<\/blockquote>/ },
-        { name: "horizontal rules", pattern: /<hr[^>]*\/?>/,},
+        { name: "horizontal rules", pattern: /<hr[^>]*\/?>/, },
         // Strikethrough requires remark-gfm plugin - currently rendered as plain text
         { name: "strikethrough text", pattern: /~~[^~]+~~/ }
       ];
