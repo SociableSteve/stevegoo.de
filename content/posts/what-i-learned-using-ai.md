@@ -5,7 +5,7 @@ publishedAt: "2026-02-24"
 tags: ["Engineering", "AI", "Process"]
 draft: false
 ---
-I recently had a project where, while there wasn't a hard deadline, there was a need for rapid delivery. We had a way of capturing information previously which had already been decomissioned and currently had no way of capturing or updating that information. There was someone who was working on this but they didn't get a chance to finish it before going on honeymoon. I could have on-boarded someone else but by the time they got the accesses, domain knowledge, and context it might have taken too long to do.
+I recently had a project where, while there wasn't a hard deadline, there was a need for rapid delivery. We had a way of capturing information previously which had already been decommissioned and currently had no way of capturing or updating that information. There was someone who was working on this but they didn't get a chance to finish it before going on honeymoon. I could have on-boarded someone else but by the time they got the accesses, domain knowledge, and context it might have taken too long to do.
 
 Add to that the company had recently decided to go all-in on AINE and SDD and it became an opportunity for me to learn what that was all about. I hadn't previously used AI in anger - sure I'd played with it but not on something going to production and never under a time constraint. It seemed a great opportunity to learn how our engineers might approach things and definitely a chance to understand the journey they'd be going through.
 
