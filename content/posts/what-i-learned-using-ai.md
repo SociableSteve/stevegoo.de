@@ -49,4 +49,4 @@ AI is a tool and like all tools it takes time to master it. I've improved massiv
 
 It's not possible to completely remove the fact that AI will get it wrong sometimes and won't tell anyone, it'll just happily fix it and move on without long-term learning. It'll reproduce the same mistake again given the same circumstance, so it's important to teach the AI what not to do using things like AGENTS.md (or similar) and what good looks like. The way you interact with the AI isn't static, it's an evolving setup, and the more you work to improve it the better the outcomes you'll get.
 
-Probably most importantly - AI isn't ready for hands-off working. The (human-in-the-loop)[https://cloud.google.com/discover/human-in-the-loop?hl=en] is still massively important and will be for a long time to come.
+Probably most importantly - AI isn't ready for hands-off working. The [human-in-the-loop](https://cloud.google.com/discover/human-in-the-loop) is still massively important and will be for a long time to come.
