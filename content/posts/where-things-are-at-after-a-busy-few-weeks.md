@@ -14,4 +14,6 @@ This is where SDD is going to help - it forces us to make explicit that informat
 
 I've been encouraged by the number of people who are working through the upskilling that we're producing though. So far about half of everyone has engaged with the latest upskilling efforts after only two weeks, with the target being ten weeks. This puts us slightly ahead of where we wanted to be and alleviates one of my fears that people won't want to engage and there'll need to be a need to use the 'stick' rather than the 'carrot' to get people engaged.
 
+Over the next few weeks I want to work on building out a set of skills, agents, etc. to use in Claude Code to help make managing our internal projects easier, quicker, more hands-off (but still keeping the human-in-the-loop). Let's see how that plan fares in the face of to never ending to-do list.
+
 Overall I'm feeling a mixture of positivitiy but also trepidation for the week ahead and the scale of work to be done.
